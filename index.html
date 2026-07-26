@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ilfath Ubaydillah Mudzaki — Portofolio</title>
+<meta name="description" content="Portofolio pribadi Ilfath Ubaydillah Mudzaki.">
+
+<!-- Google Fonts: ganti jika ingin memakai kombinasi font lain -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Splash Screen -->
+<div id="splash-screen" class="splash-screen" aria-label="Loading screen">
+  <div class="splash-content">
+    <div class="splash-text-wrapper" id="splashTextWrapper"></div>
+    <div class="splash-loader"></div>
+  </div>
+</div>
+
+<!-- Cursor glow ambient (dimatikan otomatis di mobile / prefers-reduced-motion) -->
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+<!-- Progress bar tipis untuk layar kecil -->
+<div class="mobile-progress" id="mobileProgress" aria-hidden="true"></div>
+
+<!-- "Jalur perjalanan" — elemen signature: garis + node yang menyala mengikuti scroll -->
+<nav class="journey-path" id="journeyPath" aria-label="Kemajuan jelajah halaman">
+  <div class="journey-line"></div>
+  <div class="journey-fill" id="journeyFill"></div>
+  <div class="journey-marker" id="journeyMarker" aria-hidden="true">
+    <span class="marker-core"></span>
+  </div>
+  <button class="journey-node" data-target="hero"><span class="node-dot"></span><span class="node-label">Mulai</span></button>
+  <button class="journey-node" data-target="about"><span class="node-dot"></span><span class="node-label">Tentang</span></button>
+  <button class="journey-node" data-target="education"><span class="node-dot"></span><span class="node-label">Pendidikan</span></button>
+  <button class="journey-node" data-target="skills"><span class="node-dot"></span><span class="node-label">Keahlian</span></button>
+  <button class="journey-node" data-target="projects"><span class="node-dot"></span><span class="node-label">Proyek</span></button>
+  <button class="journey-node" data-target="contact"><span class="node-dot"></span><span class="node-label">Kontak</span></button>
+</nav>
+
+<header class="site-header" id="siteHeader">
+  <a href="#hero" class="brand">Ilfath<span class="brand-dot">.</span></a>
+  <nav class="top-nav" id="topNav">
+    <a href="#about">Tentang</a>
+    <a href="#education">Pendidikan</a>
+    <a href="#skills">Keahlian</a>
+    <a href="#projects">Proyek</a>
+    <a href="#contact" class="nav-cta">Kontak</a>
+  </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="Buka menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<main>
+
+  <!-- ================= HERO ================= -->
+  <section id="hero" class="section hero">
+    <div class="hero-ambient" aria-hidden="true">
+      <span class="drift d1"></span>
+      <span class="drift d2"></span>
+      <span class="drift d3"></span>
+      <span class="drift d4"></span>
+      <span class="drift d5"></span>
+    </div>
+
+    <p class="eyebrow reveal-up" data-delay="0">Babak Baru — Prolog</p>
+
+    <h1 class="hero-title">
+      <span class="line reveal-up" data-delay="1">Ilfath Ubaydillah</span>
+      <span class="line reveal-up accent-word" data-delay="2">Mudzaki</span>
+    </h1>
+
+    <p class="hero-tagline reveal-up" data-delay="3">
+      Lulusan baru yang sedang memulai perjalanan —
+      <span class="typewriter" id="typewriter"></span>
+    </p>
+
+    <div class="hero-actions reveal-up" data-delay="4">
+      <a href="#projects" class="btn btn-primary magnetic">Lihat Proyek</a>
+      <a href="#contact" class="btn btn-ghost magnetic">Hubungi Saya</a>
+    </div>
+
+    <div class="hero-stats reveal-up" data-delay="5">
+      <div class="stat">
+        <span class="stat-number" data-count="3">0</span><span class="stat-suffix">+</span>
+        <span class="stat-label">Proyek Dibuat</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number" data-count="8">0</span><span class="stat-suffix">+</span>
+        <span class="stat-label">Skill Dipelajari</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number" data-count="100">0</span><span class="stat-suffix">%</span>
+        <span class="stat-label">Semangat Belajar</span>
+      </div>
+    </div>
+
+    <div class="scroll-cue reveal-up" data-delay="6">
+      <span class="scroll-line"></span>
+      <span class="scroll-text">Gulir untuk memulai</span>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section id="about" class="section about">
+    <div class="section-head">
+      <p class="eyebrow reveal-up" data-delay="0">Bab I</p>
+      <h2 class="section-title reveal-up" data-delay="1">Tentang Saya</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-portrait reveal-up" data-delay="2">
+        <!-- Ganti dengan foto asli kamu: <img src="foto-kamu.jpg" alt="Foto Ilfath Ubaydillah Mudzaki"> -->
+        <div class="portrait-frame">
+          <div class="portrait-placeholder">Foto Kamu</div>
+        </div>
+        <div class="portrait-tag">Surabaya, Indonesia</div>
+      </div>
+
+      <div class="about-copy reveal-up" data-delay="3">
+        <p>
+          Halo, saya <strong>Ilfath Ubaydillah Mudzaki</strong>. Saya baru saja menyelesaikan
+          masa studi dan sekarang bersiap melangkah ke babak berikutnya: dunia kerja.
+          <em>(Ganti paragraf ini dengan cerita singkat tentang dirimu — latar belakang,
+          minat, dan apa yang membuatmu tertarik di bidang ini.)</em>
+        </p>
+        <p>
+          Saya senang mempelajari hal baru, mencoba proyek kecil, dan pelan-pelan
+          mengubahnya menjadi kebiasaan yang lebih besar. Halaman ini adalah tempat saya
+          merangkum apa yang sudah saya pelajari — dan apa yang sedang saya tuju.
+        </p>
+
+        <ul class="about-facts">
+          <li><span>Domisili</span><strong>Surabaya, Jawa Timur</strong></li>
+          <li><span>Status</span><strong>Fresh Graduate</strong></li>
+          <li><span>Fokus</span><strong>Sedang dieksplorasi</strong></li>
+          <li><span>Bahasa</span><strong>Indonesia, Inggris</strong></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EDUCATION ================= -->
+  <section id="education" class="section education">
+    <div class="section-head">
+      <p class="eyebrow reveal-up" data-delay="0">Bab II</p>
+      <h2 class="section-title reveal-up" data-delay="1">Pendidikan</h2>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item reveal-up" data-delay="2">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <span class="timeline-year">20XX — 20XX</span>
+          <h3>Nama Universitas / Kampus</h3>
+          <p>Program Studi Kamu · Fakultas Kamu</p>
+          <p class="timeline-note">Ganti dengan pencapaian singkat, IPK, atau organisasi yang diikuti.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal-up" data-delay="3">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <span class="timeline-year">20XX — 20XX</span>
+          <h3>Nama SMA / SMK</h3>
+          <p>Jurusan Kamu</p>
+          <p class="timeline-note">Ganti dengan kegiatan atau prestasi yang relevan.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal-up" data-delay="4">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <span class="timeline-year">20XX</span>
+          <h3>Sertifikasi / Pelatihan</h3>
+          <p>Nama kursus atau sertifikasi</p>
+          <p class="timeline-note">Tambahkan sertifikat online, bootcamp, atau workshop yang pernah diikuti.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SKILLS ================= -->
+  <section id="skills" class="section skills">
+    <div class="section-head">
+      <p class="eyebrow reveal-up" data-delay="0">Bab III</p>
+      <h2 class="section-title reveal-up" data-delay="1">Keahlian</h2>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-group reveal-up" data-delay="2">
+        <h3>Teknis</h3>
+        <div class="chip-row">
+          <span class="chip" data-tip="Dasar struktur halaman web">HTML</span>
+          <span class="chip" data-tip="Merancang tampilan & animasi">CSS</span>
+          <span class="chip" data-tip="Membuat interaksi di web">JavaScript</span>
+          <span class="chip" data-tip="Ganti sesuai skill kamu">Python</span>
+          <span class="chip" data-tip="Ganti sesuai skill kamu">Microsoft Office</span>
+        </div>
+      </div>
+
+      <div class="skill-group reveal-up" data-delay="3">
+        <h3>Perangkat & Alat</h3>
+        <div class="chip-row">
+          <span class="chip" data-tip="Version control">Git & GitHub</span>
+          <span class="chip" data-tip="Desain & prototipe">Figma</span>
+          <span class="chip" data-tip="Ganti sesuai tools kamu">Canva</span>
+        </div>
+      </div>
+
+      <div class="skill-group reveal-up" data-delay="4">
+        <h3>Soft Skill</h3>
+        <div class="chip-row">
+          <span class="chip" data-tip="Menyampaikan ide dengan jelas">Komunikasi</span>
+          <span class="chip" data-tip="Belajar dan berkembang bersama">Kerja Tim</span>
+          <span class="chip" data-tip="Menyelesaikan tugas tepat waktu">Manajemen Waktu</span>
+          <span class="chip" data-tip="Cepat beradaptasi dengan hal baru">Adaptif</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROJECTS ================= -->
+  <section id="projects" class="section projects">
+    <div class="section-head">
+      <p class="eyebrow reveal-up" data-delay="0">Bab IV</p>
+      <h2 class="section-title reveal-up" data-delay="1">Proyek</h2>
+    </div>
+
+    <div class="project-grid">
+      <article class="project-card reveal-up" data-delay="2">
+        <div class="project-media" style="--tone:#C9A227;">
+          <span class="project-glyph">01</span>
+        </div>
+        <div class="project-body">
+          <h3>Nama Proyek Pertama</h3>
+          <p>Deskripsi singkat: masalah apa yang diselesaikan dan teknologi yang dipakai.</p>
+          <div class="project-tags">
+            <span>HTML</span><span>CSS</span><span>JS</span>
+          </div>
+          <a href="#" class="project-link">Lihat detail →</a>
+        </div>
+      </article>
+
+      <article class="project-card reveal-up" data-delay="3">
+        <div class="project-media" style="--tone:#5E93B3;">
+          <span class="project-glyph">02</span>
+        </div>
+        <div class="project-body">
+          <h3>Nama Proyek Kedua</h3>
+          <p>Deskripsi singkat: masalah apa yang diselesaikan dan teknologi yang dipakai.</p>
+          <div class="project-tags">
+            <span>Python</span><span>Data</span>
+          </div>
+          <a href="#" class="project-link">Lihat detail →</a>
+        </div>
+      </article>
+
+      <article class="project-card reveal-up" data-delay="4">
+        <div class="project-media" style="--tone:#E2725B;">
+          <span class="project-glyph">03</span>
+        </div>
+        <div class="project-body">
+          <h3>Nama Proyek Ketiga</h3>
+          <p>Deskripsi singkat: masalah apa yang diselesaikan dan teknologi yang dipakai.</p>
+          <div class="project-tags">
+            <span>Figma</span><span>UI/UX</span>
+          </div>
+          <a href="#" class="project-link">Lihat detail →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section id="contact" class="section contact">
+    <div class="section-head">
+      <p class="eyebrow reveal-up" data-delay="0">Penutup</p>
+      <h2 class="section-title reveal-up" data-delay="1">Mari Terhubung</h2>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-copy reveal-up" data-delay="2">
+        <p>
+          Terbuka untuk peluang magang, pekerjaan pertama, atau sekadar berdiskusi
+          tentang proyek baru. Jangan ragu untuk menyapa.
+        </p>
+        <ul class="contact-links">
+          <li><a href="mailto:namakamu@email.com">namakamu@email.com</a></li>
+          <li><a href="#" target="_blank" rel="noopener">linkedin.com/in/username</a></li>
+          <li><a href="#" target="_blank" rel="noopener">github.com/username</a></li>
+          <li><a href="#" target="_blank" rel="noopener">instagram.com/username</a></li>
+        </ul>
+      </div>
+
+      <form class="contact-form reveal-up" data-delay="3" id="contactForm">
+        <div class="field">
+          <input type="text" id="name" name="name" required placeholder=" ">
+          <label for="name">Nama</label>
+        </div>
+        <div class="field">
+          <input type="email" id="email" name="email" required placeholder=" ">
+          <label for="email">Email</label>
+        </div>
+        <div class="field">
+          <textarea id="message" name="message" rows="4" required placeholder=" "></textarea>
+          <label for="message">Pesan</label>
+        </div>
+        <button type="submit" class="btn btn-primary magnetic full">Kirim Pesan</button>
+        <p class="form-note" id="formNote" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>© <span id="year"></span> Ilfath Ubaydillah Mudzaki. Portofolio</p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
