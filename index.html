@@ -1,332 +1,501 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ilfath Ubaydillah Mudzaki — Portofolio</title>
-<meta name="description" content="Portofolio pribadi Ilfath Ubaydillah Mudzaki.">
-
-<!-- Google Fonts: ganti jika ingin memakai kombinasi font lain -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ilfath Ubaydillah Mudzaki — Fullstack Developer</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23111'/><text x='50%' y='65%' font-size='60' font-family='sans-serif' font-weight='bold' fill='%23fff' text-anchor='middle'>I.</text></svg>">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="light-theme">
 
-<!-- Splash Screen -->
-<div id="splash-screen" class="splash-screen" aria-label="Loading screen">
-  <div class="splash-content">
-    <div class="splash-text-wrapper" id="splashTextWrapper"></div>
-    <div class="splash-loader"></div>
+  <!-- MATRIX CANVAS -->
+  <canvas id="matrix-canvas" class="matrix-canvas"></canvas>
+
+  <!-- SCROLL PROGRESS BAR -->
+  <div id="scroll-progress"></div>
+
+  <!-- CUSTOM CURSOR -->
+  <div class="custom-cursor" id="custom-cursor"></div>
+
+  <!-- AMBIENT BACKGROUND -->
+  <div class="ambient-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    
+    <!-- F1 Car -->
+    <div class="f1-car" id="f1-car">
+      <div class="f1-body"></div>
+      <div class="f1-wheel front"></div>
+      <div class="f1-wheel back"></div>
+    </div>
+    
+    <!-- Pacman -->
+    <div class="pacman-container" id="pacman-container">
+      <div class="pacman"></div>
+      <div class="pacman-food"></div>
+      <div class="pacman-food"></div>
+      <div class="pacman-food"></div>
+      <div class="ghost red"></div>
+    </div>
   </div>
-</div>
 
-<!-- Cursor glow ambient (dimatikan otomatis di mobile / prefers-reduced-motion) -->
-<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">Ilfath<span>.</span></a>
+      
+      <ul class="nav-links">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#playground">Playground</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      
+      <div class="nav-actions">
+        <button id="theme-toggle" class="theme-toggle">Dark version ↗</button>
+        <a href="#contact" class="btn-solid">Let's talk</a>
+      </div>
 
-<!-- Progress bar tipis untuk layar kecil -->
-<div class="mobile-progress" id="mobileProgress" aria-hidden="true"></div>
-
-<!-- "Jalur perjalanan" — elemen signature: garis + node yang menyala mengikuti scroll -->
-<nav class="journey-path" id="journeyPath" aria-label="Kemajuan jelajah halaman">
-  <div class="journey-line"></div>
-  <div class="journey-fill" id="journeyFill"></div>
-  <div class="journey-marker" id="journeyMarker" aria-hidden="true">
-    <span class="marker-core"></span>
-  </div>
-  <button class="journey-node" data-target="hero"><span class="node-dot"></span><span class="node-label">Mulai</span></button>
-  <button class="journey-node" data-target="about"><span class="node-dot"></span><span class="node-label">Tentang</span></button>
-  <button class="journey-node" data-target="education"><span class="node-dot"></span><span class="node-label">Pendidikan</span></button>
-  <button class="journey-node" data-target="skills"><span class="node-dot"></span><span class="node-label">Keahlian</span></button>
-  <button class="journey-node" data-target="projects"><span class="node-dot"></span><span class="node-label">Proyek</span></button>
-  <button class="journey-node" data-target="contact"><span class="node-dot"></span><span class="node-label">Kontak</span></button>
-</nav>
-
-<header class="site-header" id="siteHeader">
-  <a href="#hero" class="brand">Ilfath<span class="brand-dot">.</span></a>
-  <nav class="top-nav" id="topNav">
-    <a href="#about">Tentang</a>
-    <a href="#education">Pendidikan</a>
-    <a href="#skills">Keahlian</a>
-    <a href="#projects">Proyek</a>
-    <a href="#contact" class="nav-cta">Kontak</a>
+      <button class="mobile-menu-btn">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </nav>
-  <button class="nav-toggle" id="navToggle" aria-label="Buka menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-</header>
 
-<main>
-
-  <!-- ================= HERO ================= -->
-  <section id="hero" class="section hero">
-    <div class="hero-ambient" aria-hidden="true">
-      <span class="drift d1"></span>
-      <span class="drift d2"></span>
-      <span class="drift d3"></span>
-      <span class="drift d4"></span>
-      <span class="drift d5"></span>
-    </div>
-
-    <p class="eyebrow reveal-up" data-delay="0">Babak Baru — Prolog</p>
-
-    <h1 class="hero-title">
-      <span class="line reveal-up" data-delay="1">Ilfath Ubaydillah</span>
-      <span class="line reveal-up accent-word" data-delay="2">Mudzaki</span>
-    </h1>
-
-    <p class="hero-tagline reveal-up" data-delay="3">
-      Lulusan baru yang sedang memulai perjalanan —
-      <span class="typewriter" id="typewriter"></span>
-    </p>
-
-    <div class="hero-actions reveal-up" data-delay="4">
-      <a href="#projects" class="btn btn-primary magnetic">Lihat Proyek</a>
-      <a href="#contact" class="btn btn-ghost magnetic">Hubungi Saya</a>
-    </div>
-
-    <div class="hero-stats reveal-up" data-delay="5">
-      <div class="stat">
-        <span class="stat-number" data-count="3">0</span><span class="stat-suffix">+</span>
-        <span class="stat-label">Proyek Dibuat</span>
-      </div>
-      <div class="stat">
-        <span class="stat-number" data-count="8">0</span><span class="stat-suffix">+</span>
-        <span class="stat-label">Skill Dipelajari</span>
-      </div>
-      <div class="stat">
-        <span class="stat-number" data-count="100">0</span><span class="stat-suffix">%</span>
-        <span class="stat-label">Semangat Belajar</span>
-      </div>
-    </div>
-
-    <div class="scroll-cue reveal-up" data-delay="6">
-      <span class="scroll-line"></span>
-      <span class="scroll-text">Gulir untuk memulai</span>
-    </div>
-  </section>
-
-  <!-- ================= ABOUT ================= -->
-  <section id="about" class="section about">
-    <div class="section-head">
-      <p class="eyebrow reveal-up" data-delay="0">Bab I</p>
-      <h2 class="section-title reveal-up" data-delay="1">Tentang Saya</h2>
-    </div>
-
-    <div class="about-grid">
-      <div class="about-portrait reveal-up" data-delay="2">
-        <!-- Ganti dengan foto asli kamu: <img src="foto-kamu.jpg" alt="Foto Ilfath Ubaydillah Mudzaki"> -->
-        <div class="portrait-frame">
-          <div class="portrait-placeholder">Foto Kamu</div>
-        </div>
-        <div class="portrait-tag">Surabaya, Indonesia</div>
-      </div>
-
-      <div class="about-copy reveal-up" data-delay="3">
-        <p>
-          Halo, saya <strong>Ilfath Ubaydillah Mudzaki</strong>. Saya baru saja menyelesaikan
-          masa studi dan sekarang bersiap melangkah ke babak berikutnya: dunia kerja.
-          <em>(Ganti paragraf ini dengan cerita singkat tentang dirimu — latar belakang,
-          minat, dan apa yang membuatmu tertarik di bidang ini.)</em>
-        </p>
-        <p>
-          Saya senang mempelajari hal baru, mencoba proyek kecil, dan pelan-pelan
-          mengubahnya menjadi kebiasaan yang lebih besar. Halaman ini adalah tempat saya
-          merangkum apa yang sudah saya pelajari — dan apa yang sedang saya tuju.
-        </p>
-
-        <ul class="about-facts">
-          <li><span>Domisili</span><strong>Surabaya, Jawa Timur</strong></li>
-          <li><span>Status</span><strong>Fresh Graduate</strong></li>
-          <li><span>Fokus</span><strong>Sedang dieksplorasi</strong></li>
-          <li><span>Bahasa</span><strong>Indonesia, Inggris</strong></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= EDUCATION ================= -->
-  <section id="education" class="section education">
-    <div class="section-head">
-      <p class="eyebrow reveal-up" data-delay="0">Bab II</p>
-      <h2 class="section-title reveal-up" data-delay="1">Pendidikan</h2>
-    </div>
-
-    <div class="timeline">
-      <div class="timeline-item reveal-up" data-delay="2">
-        <div class="timeline-dot"></div>
-        <div class="timeline-card">
-          <span class="timeline-year">20XX — 20XX</span>
-          <h3>Nama Universitas / Kampus</h3>
-          <p>Program Studi Kamu · Fakultas Kamu</p>
-          <p class="timeline-note">Ganti dengan pencapaian singkat, IPK, atau organisasi yang diikuti.</p>
-        </div>
-      </div>
-
-      <div class="timeline-item reveal-up" data-delay="3">
-        <div class="timeline-dot"></div>
-        <div class="timeline-card">
-          <span class="timeline-year">20XX — 20XX</span>
-          <h3>Nama SMA / SMK</h3>
-          <p>Jurusan Kamu</p>
-          <p class="timeline-note">Ganti dengan kegiatan atau prestasi yang relevan.</p>
-        </div>
-      </div>
-
-      <div class="timeline-item reveal-up" data-delay="4">
-        <div class="timeline-dot"></div>
-        <div class="timeline-card">
-          <span class="timeline-year">20XX</span>
-          <h3>Sertifikasi / Pelatihan</h3>
-          <p>Nama kursus atau sertifikasi</p>
-          <p class="timeline-note">Tambahkan sertifikat online, bootcamp, atau workshop yang pernah diikuti.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= SKILLS ================= -->
-  <section id="skills" class="section skills">
-    <div class="section-head">
-      <p class="eyebrow reveal-up" data-delay="0">Bab III</p>
-      <h2 class="section-title reveal-up" data-delay="1">Keahlian</h2>
-    </div>
-
-    <div class="skills-grid">
-      <div class="skill-group reveal-up" data-delay="2">
-        <h3>Teknis</h3>
-        <div class="chip-row">
-          <span class="chip" data-tip="Dasar struktur halaman web">HTML</span>
-          <span class="chip" data-tip="Merancang tampilan & animasi">CSS</span>
-          <span class="chip" data-tip="Membuat interaksi di web">JavaScript</span>
-          <span class="chip" data-tip="Ganti sesuai skill kamu">Python</span>
-          <span class="chip" data-tip="Ganti sesuai skill kamu">Microsoft Office</span>
-        </div>
-      </div>
-
-      <div class="skill-group reveal-up" data-delay="3">
-        <h3>Perangkat & Alat</h3>
-        <div class="chip-row">
-          <span class="chip" data-tip="Version control">Git & GitHub</span>
-          <span class="chip" data-tip="Desain & prototipe">Figma</span>
-          <span class="chip" data-tip="Ganti sesuai tools kamu">Canva</span>
-        </div>
-      </div>
-
-      <div class="skill-group reveal-up" data-delay="4">
-        <h3>Soft Skill</h3>
-        <div class="chip-row">
-          <span class="chip" data-tip="Menyampaikan ide dengan jelas">Komunikasi</span>
-          <span class="chip" data-tip="Belajar dan berkembang bersama">Kerja Tim</span>
-          <span class="chip" data-tip="Menyelesaikan tugas tepat waktu">Manajemen Waktu</span>
-          <span class="chip" data-tip="Cepat beradaptasi dengan hal baru">Adaptif</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= PROJECTS ================= -->
-  <section id="projects" class="section projects">
-    <div class="section-head">
-      <p class="eyebrow reveal-up" data-delay="0">Bab IV</p>
-      <h2 class="section-title reveal-up" data-delay="1">Proyek</h2>
-    </div>
-
-    <div class="project-grid">
-      <article class="project-card reveal-up" data-delay="2">
-        <div class="project-media" style="--tone:#C9A227;">
-          <span class="project-glyph">01</span>
-        </div>
-        <div class="project-body">
-          <h3>Nama Proyek Pertama</h3>
-          <p>Deskripsi singkat: masalah apa yang diselesaikan dan teknologi yang dipakai.</p>
-          <div class="project-tags">
-            <span>HTML</span><span>CSS</span><span>JS</span>
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero" id="hero">
+      <div class="container hero-container">
+        
+        <div class="hero-content reveal-up">
+          <div class="badge-group">
+            <div class="availability-badge">
+              <span class="pulse-dot"></span> OPEN TO COLLABORATIONS
+            </div>
           </div>
-          <a href="#" class="project-link">Lihat detail →</a>
-        </div>
-      </article>
-
-      <article class="project-card reveal-up" data-delay="3">
-        <div class="project-media" style="--tone:#5E93B3;">
-          <span class="project-glyph">02</span>
-        </div>
-        <div class="project-body">
-          <h3>Nama Proyek Kedua</h3>
-          <p>Deskripsi singkat: masalah apa yang diselesaikan dan teknologi yang dipakai.</p>
-          <div class="project-tags">
-            <span>Python</span><span>Data</span>
+          
+          <h1 class="hero-title">
+            Building software<br>
+            that feels <span class="highlight">intelligent.</span>
+          </h1>
+          
+          <p class="hero-subtitle">
+            I'm Ilfath Ubaydillah Mudzaki, a developer crafting solutions from AI models and Data Mining to Mobile Apps and Web Systems.
+          </p>
+          
+          <div class="hero-cta">
+            <a href="#work" class="btn-solid with-icon">See my work ↗</a>
+            <a href="#contact" class="btn-outline">Get in touch</a>
           </div>
-          <a href="#" class="project-link">Lihat detail →</a>
         </div>
-      </article>
 
-      <article class="project-card reveal-up" data-delay="4">
-        <div class="project-media" style="--tone:#E2725B;">
-          <span class="project-glyph">03</span>
-        </div>
-        <div class="project-body">
-          <h3>Nama Proyek Ketiga</h3>
-          <p>Deskripsi singkat: masalah apa yang diselesaikan dan teknologi yang dipakai.</p>
-          <div class="project-tags">
-            <span>Figma</span><span>UI/UX</span>
+        <div class="hero-visual reveal-up" style="transition-delay: 0.2s;">
+          <div class="browser-mockup">
+            <div class="browser-header">
+              <div class="dots"><span></span><span></span><span></span></div>
+              <div class="url-bar">website-kamu.co.id</div>
+            </div>
+            <div class="browser-body">
+              <div class="mockup-content">
+                <div class="mockup-text">
+                  <h3>Website modern dan responsif, <span style="color:#0ea5e9;">tanpa ribet</span> dan satset.</h3>
+                  <div class="mockup-btn">Buat website →</div>
+                </div>
+              </div>
+            </div>
           </div>
-          <a href="#" class="project-link">Lihat detail →</a>
+          
+          <div class="floating-stat-card">
+            <div class="stat-num">18</div>
+            <div class="stat-text">projects shipped</div>
+          </div>
         </div>
-      </article>
-    </div>
-  </section>
 
-  <!-- ================= CONTACT ================= -->
-  <section id="contact" class="section contact">
-    <div class="section-head">
-      <p class="eyebrow reveal-up" data-delay="0">Penutup</p>
-      <h2 class="section-title reveal-up" data-delay="1">Mari Terhubung</h2>
-    </div>
-
-    <div class="contact-grid">
-      <div class="contact-copy reveal-up" data-delay="2">
-        <p>
-          Terbuka untuk peluang magang, pekerjaan pertama, atau sekadar berdiskusi
-          tentang proyek baru. Jangan ragu untuk menyapa.
-        </p>
-        <ul class="contact-links">
-          <li><a href="mailto:namakamu@email.com">namakamu@email.com</a></li>
-          <li><a href="#" target="_blank" rel="noopener">linkedin.com/in/username</a></li>
-          <li><a href="#" target="_blank" rel="noopener">github.com/username</a></li>
-          <li><a href="#" target="_blank" rel="noopener">instagram.com/username</a></li>
-        </ul>
       </div>
 
-      <form class="contact-form reveal-up" data-delay="3" id="contactForm">
-        <div class="field">
-          <input type="text" id="name" name="name" required placeholder=" ">
-          <label for="name">Nama</label>
+      <!-- 3D Skill Cloud -->
+      <div class="skill-cloud-wrapper reveal-up" id="skill-cloud-container">
+        <canvas id="skill-canvas" width="600" height="600"></canvas>
+        <div id="skill-tags" style="display: none;">
+          <ul>
+            <li><a href="#" style="color: #ff2d20;">Laravel</a></li>
+            <li><a href="#" style="color: #3776ab;">Python</a></li>
+            <li><a href="#" style="color: #00599c;">C++</a></li>
+            <li><a href="#" style="color: #b07219;">Java</a></li>
+            <li><a href="#" style="color: #02569b;">Flutter</a></li>
+            <li><a href="#" style="color: #e34f26;">HTML</a></li>
+            <li><a href="#" style="color: #1572b6;">CSS</a></li>
+            <li><a href="#" style="color: #f89820;">Data Mining</a></li>
+            <li><a href="#" style="color: #ff9900;">AI/ML</a></li>
+            <li><a href="#" style="color: #333333;">Mixed Reality</a></li>
+          </ul>
         </div>
-        <div class="field">
-          <input type="email" id="email" name="email" required placeholder=" ">
-          <label for="email">Email</label>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="container stats-container reveal-up">
+        <div class="stat-box">
+          <h2>18</h2>
+          <p>Projects shipped</p>
         </div>
-        <div class="field">
-          <textarea id="message" name="message" rows="4" required placeholder=" "></textarea>
-          <label for="message">Pesan</label>
+        <div class="stat-box">
+          <h2>10+</h2>
+          <p>Technologies used</p>
         </div>
-        <button type="submit" class="btn btn-primary magnetic full">Kirim Pesan</button>
-        <p class="form-note" id="formNote" role="status" aria-live="polite"></p>
-      </form>
+        <div class="stat-box">
+          <h2>2</h2>
+          <p>AI Models built</p>
+        </div>
+        <div class="stat-box">
+          <h2>1</h2>
+          <p>Mixed Reality App</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider reveal-up"><div class="line"></div><div class="icon">✦</div><div class="line"></div></div>
+
+    <!-- WORK SECTION -->
+    <section class="work" id="work">
+      <div class="container">
+        <div class="section-header">
+          <span class="eyebrow">SELECTED WORK</span>
+          <div class="header-row">
+            <h2 class="scramble-text" data-text="Featured Projects">Featured Projects</h2>
+            <div class="filter-pills">
+              <button class="active">All</button>
+              <button>AI App</button>
+              <button>Web App</button>
+              <button>WordPress</button>
+              <button>Algorithm / Data</button>
+              <button>Management System</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-grid">
+          <!-- Project 1 -->
+          <div class="project-card reveal-up">
+            <div class="card-image bg-blue">
+              <div class="badge">AI MODEL</div>
+              <div class="mockup-img"></div>
+            </div>
+            <div class="card-content">
+              <div class="meta">Skripsi Project • 2024</div>
+              <h3>AI Model (Skripsi)</h3>
+              <p>An Artificial Intelligence classification model built for my final thesis (skripsi), utilizing Python and Machine Learning techniques.</p>
+              <div class="tags">
+                <span>Python</span><span>AI</span><span>Machine Learning</span>
+              </div>
+              <div class="card-footer">
+                <a href="https://github.com/ilfathubyd/skripsi-ai-model" target="_blank" class="link-btn">View Code ↗</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="project-card reveal-up" style="transition-delay: 0.1s;">
+            <div class="card-image bg-gray">
+              <div class="badge">MIXED REALITY</div>
+              <div class="mockup-img"></div>
+            </div>
+            <div class="card-content">
+              <div class="meta">UAS Project • 2024</div>
+              <h3>Lokantara AR</h3>
+              <p>An interactive Augmented Reality / Mixed Reality project designed for university examination (UAS).</p>
+              <div class="tags">
+                <span>HTML</span><span>AR/MR</span><span>Mixed Reality</span>
+              </div>
+              <div class="card-footer">
+                <a href="https://github.com/ilfathubyd/lokantara-ar" target="_blank" class="link-btn">View Code ↗</a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Project 3 -->
+          <div class="project-card reveal-up" style="transition-delay: 0.2s;">
+            <div class="card-image bg-pink">
+              <div class="badge">DATA MINING</div>
+              <div class="mockup-img"></div>
+            </div>
+            <div class="card-content">
+              <div class="meta">UAS Project • 2024</div>
+              <h3>Hoax Classification</h3>
+              <p>A data mining project focused on classifying hoax news and information, demonstrating data processing and classification algorithms.</p>
+              <div class="tags">
+                <span>Python</span><span>Data Mining</span><span>Algorithms</span>
+              </div>
+              <div class="card-footer">
+                <a href="https://github.com/ilfathubyd/klasifikasi-hoax-datamining" target="_blank" class="link-btn">View Code ↗</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider reveal-up"><div class="line"></div><div class="icon">✦</div><div class="line"></div></div>
+
+    <!-- ABOUT SECTION -->
+    <section class="about" id="about">
+      <div class="container reveal-up">
+        <span class="eyebrow">ABOUT</span>
+        <div class="about-grid">
+          <div class="about-left">
+            <h2 class="scramble-text" data-text="An adaptive developer exploring intelligent systems.">An adaptive developer exploring intelligent systems.</h2>
+          </div>
+          <div class="about-right">
+            <p>I am passionate about solving complex problems through technology. My journey involves building diverse projects across multiple domains—from developing AI classification models and Mixed Reality applications to crafting mobile and web systems.</p>
+            <p>Currently, my focus is on expanding my knowledge in Data Mining and Artificial Intelligence, aiming to create software that not only functions well but also provides intelligent insights.</p>
+            
+            <div class="toolbox">
+              <span class="toolbox-title">TOOLBOX</span>
+              <div class="tags">
+                <span>Python</span>
+                <span>C++</span>
+                <span>Java</span>
+                <span>Laravel</span>
+                <span>Blade</span>
+                <span>Flutter</span>
+                <span>HTML/CSS</span>
+                <span>Data Mining</span>
+                <span>Machine Learning</span>
+                <span>Mixed Reality</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider reveal-up"><div class="line"></div><div class="icon">✦</div><div class="line"></div></div>
+
+    <!-- EXPERIENCE SECTION -->
+    <section class="experience" id="experience">
+      <div class="container reveal-up">
+        <span class="eyebrow">EXPERIENCE</span>
+        <h2 class="scramble-text" data-text="My Journey">My Journey</h2>
+        
+        <div class="timeline-wrapper">
+          <div class="timeline-track">
+            <div class="timeline-glow" id="timeline-glow"></div>
+          </div>
+          
+          <div class="timeline-item reveal-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <span class="timeline-date">2024 - Present</span>
+              <h3>Freelance Full-Stack Developer</h3>
+              <p>Building high-performance AI integrations, custom dashboards, and modern landing pages for various international clients.</p>
+            </div>
+          </div>
+          
+          <div class="timeline-item reveal-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <span class="timeline-date">2025 - 2026</span>
+              <h3>Fullstack Developer Website and Mobile - Internship at BBWS Brantas Surabaya</h3>
+              <p>Developing a website and mobile application for BBWS Brantas Surabaya, focusing on data management and visualization.</p>
+            </div>
+          </div>
+          
+          <div class="timeline-item reveal-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <span class="timeline-date">2024 - 2025</span>
+              <h3>Cloud Computing - Bangkit Academy (MSIB)</h3>
+              <p>Participated in the Cloud Computing learning path at Bangkit Academy, gaining hands-on experience with cloud technologies and solutions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider reveal-up"><div class="line"></div><div class="icon">✦</div><div class="line"></div></div>
+
+    <!-- PLAYGROUND SECTION (API SANDBOX) -->
+    <section class="playground" id="playground">
+      <div class="container reveal-up">
+        <span class="eyebrow">PLAYGROUND</span>
+        <div class="playground-header">
+          <h2 class="scramble-text" data-text="Interactive API Sandbox">Interactive API Sandbox</h2>
+          <p class="text-muted">Test out the mock backend API. Click an endpoint to fetch data.</p>
+        </div>
+        
+        <div class="sandbox-wrapper">
+          <!-- Left: Endpoints -->
+          <div class="sandbox-endpoints">
+            <div class="endpoints-list">
+              <button class="endpoint-btn active" data-endpoint="profile">
+                <span class="method get">GET</span> /api/profile
+              </button>
+              <button class="endpoint-btn" data-endpoint="skills">
+                <span class="method get">GET</span> /api/skills
+              </button>
+              <button class="endpoint-btn" data-endpoint="health">
+                <span class="method get">GET</span> /api/health
+              </button>
+              <button class="endpoint-btn" data-endpoint="hire">
+                <span class="method post">POST</span> /api/hire
+              </button>
+            </div>
+            
+            <div class="sql-simulator">
+              <div class="sql-label">SQL Sandbox:</div>
+              <div class="sql-input-group">
+                <input type="text" id="sql-input" placeholder="SELECT * FROM projects..." value="SELECT * FROM skills">
+                <button id="sql-submit" class="btn-solid btn-cyan" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;">Run</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Right: Terminal Output -->
+          <div class="sandbox-terminal">
+            <div class="terminal-header">
+              <div class="dots"><span></span><span></span><span></span></div>
+              <div class="terminal-title">Response</div>
+            </div>
+            <div class="terminal-body">
+              <pre><code id="json-output"></code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="playground-header" style="margin-top: 5rem;">
+          <h2 class="scramble-text" data-text="Mini Game Break">Mini Game Break</h2>
+          <p class="text-muted">Take a break and play Flappy Dev. Spacebar or click to jump.</p>
+        </div>
+        
+        <div class="minigame-wrapper reveal-up">
+          <canvas id="flappy-canvas" width="400" height="500"></canvas>
+          <div class="minigame-overlay" id="flappy-overlay">
+            <h3 id="flappy-title">Flappy Dev</h3>
+            <p id="flappy-score-text">Score: 0</p>
+            <p id="flappy-best-score-text" style="font-size: 0.9rem; color: #9ca3af; margin-top: -1rem; margin-bottom: 1.5rem;"></p>
+            <button id="flappy-start-btn" class="btn-solid btn-cyan">Play Game</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider reveal-up"><div class="line"></div><div class="icon">✦</div><div class="line"></div></div>
+
+    <!-- ROI CALCULATOR SECTION -->
+    <section class="roi-calculator" id="roi">
+      <div class="container reveal-up">
+        <span class="eyebrow">ESTIMATE YOUR PROJECT</span>
+        <div class="roi-header">
+          <h2 class="scramble-text" data-text="What do you want to build?">What do you want to build?</h2>
+          <p class="text-muted">Move the slider to see estimated timeline and recommended tech stack.</p>
+        </div>
+        
+        <div class="calculator-card">
+          <input type="range" min="1" max="3" value="1" step="0.01" class="roi-slider" id="roi-slider">
+          <div class="slider-labels">
+            <span>Landing Page</span>
+            <span>Web App MVP</span>
+            <span>AI Platform</span>
+          </div>
+          
+          <div class="calc-results">
+            <div class="result-box">
+              <span class="result-label">Est. Time</span>
+              <h3 id="calc-time" style="transition: opacity 0.15s ease;">1 - 2 Weeks</h3>
+            </div>
+            <div class="result-box">
+              <span class="result-label">Recommended Stack</span>
+              <h3 id="calc-stack" style="transition: opacity 0.15s ease;">WordPress / HTML / CSS</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider reveal-up"><div class="line"></div><div class="icon">✦</div><div class="line"></div></div>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact" id="contact">
+      <div class="container reveal-up">
+        <div class="contact-banner">
+          <div class="mouse-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="7"></rect><line x1="12" y1="6" x2="12" y2="10"></line></svg>
+          </div>
+          <h2 class="scramble-text" data-text="Let's build something great.">Let's build something great.</h2>
+          <p>Have a project in mind or just want to say hi? I'm always open to interesting work and collaborations.</p>
+
+          <div class="contact-buttons">
+            <a href="mailto:contact.ilfath@gmail.com" class="btn-solid btn-cyan">Send me an email ↗</a>
+            <a href="https://linkedin.com/in/ilfathubyd" class="btn-outline-glass">LinkedIn</a>
+            <a href="https://github.com/ilfathubyd" class="btn-outline-glass"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg> GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-container">
+      <p>© 2026 Ilfath Ubaydillah Mudzaki</p>
+      <div style="display: flex; gap: 1rem;">
+        <button id="footer-theme-toggle" class="footer-link">← See the dark version</button>
+        <button id="cmd-k-btn" class="footer-link" onclick="document.getElementById('secret-terminal').classList.add('is-open'); setTimeout(()=>document.getElementById('st-input').focus(), 100)">[Cmd + K]</button>
+      </div>
     </div>
-  </section>
+  </footer>
 
-</main>
+  <!-- SECRET TERMINAL OVERLAY -->
+  <div class="secret-terminal-overlay" id="secret-terminal">
+    <div class="st-window">
+      <div class="st-header">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <div class="st-title">ilfath@dev: ~ (Secret Mode)</div>
+        <button class="st-close" id="st-close">&times;</button>
+      </div>
+      <div class="st-body" id="st-body">
+        <div class="st-output" id="st-output">
+          <div>Welcome to the secret terminal.</div>
+          <div>Type <span class="st-cmd" style="color:#79c0ff">help</span> to see available commands.</div>
+        </div>
+        <div id="tetris-container" style="display:none; text-align:center; margin-bottom: 10px;">
+          <canvas id="tetris" width="200" height="400" style="background:#000; border:2px solid #333;"></canvas>
+          <div id="tetris-score" style="color:#fff; margin-top:5px;">Score: 0</div>
+          <div style="color:#8b949e; font-size:12px; margin-top:5px;">Controls: Arrow Keys | Press 'Q' to quit</div>
+        </div>
+        <div class="st-input-line">
+          <span class="st-prompt" style="color:#7ee787;margin-right:8px;">ilfath@dev:~$</span>
+          <input type="text" id="st-input" autocomplete="off" spellcheck="false" autofocus>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<footer class="site-footer">
-  <p>© <span id="year"></span> Ilfath Ubaydillah Mudzaki. Portofolio</p>
-</footer>
+  <!-- CHISATO WIDGET -->
+  <div class="chisato-widget" id="chisato-widget">
+    <img src="chisato_chibi.png" alt="Chisato Nishikigi" />
+    <div class="chisato-bubble">Welcome to Lycoris mode! ✨</div>
+  </div>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <!-- MOBILE TERMINAL BUBBLE -->
+  <div id="mobile-terminal-bubble" class="mobile-terminal-bubble">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="4 17 10 11 4 5"></polyline>
+      <line x1="12" y1="19" x2="20" y2="19"></line>
+    </svg>
+  </div>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
