@@ -327,11 +327,18 @@ document.addEventListener('DOMContentLoaded', () => {
      ===================================================== */
   const progressBar = document.getElementById('scroll-progress');
   if (progressBar) {
+    let isScrollingProgress = false;
     window.addEventListener('scroll', () => {
-      const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollProgress = (window.scrollY / scrollTotal) * 100;
-      progressBar.style.width = `${scrollProgress}%`;
-    });
+      if (!isScrollingProgress) {
+        window.requestAnimationFrame(() => {
+          const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+          const scrollProgress = (window.scrollY / scrollTotal) * 100;
+          progressBar.style.width = `${scrollProgress}%`;
+          isScrollingProgress = false;
+        });
+        isScrollingProgress = true;
+      }
+    }, { passive: true });
   }
 
   /* =====================================================
@@ -342,30 +349,37 @@ document.addEventListener('DOMContentLoaded', () => {
   const timelineWrapper = document.querySelector('.timeline-wrapper');
 
   if (timelineGlow && timelineWrapper) {
+    let isScrollingTimeline = false;
     window.addEventListener('scroll', () => {
-      const rect = timelineWrapper.getBoundingClientRect();
-      const viewportCenter = window.innerHeight / 2;
-      
-      if (rect.top < viewportCenter) {
-        let progress = viewportCenter - rect.top;
-        let percentage = (progress / rect.height) * 100;
-        percentage = Math.max(0, Math.min(percentage, 100));
-        
-        timelineGlow.style.height = `${percentage}%`;
-        
-        timelineItems.forEach(item => {
-          const itemRect = item.getBoundingClientRect();
-          if (itemRect.top < viewportCenter + 50) {
-            item.classList.add('active');
+      if (!isScrollingTimeline) {
+        window.requestAnimationFrame(() => {
+          const rect = timelineWrapper.getBoundingClientRect();
+          const viewportCenter = window.innerHeight / 2;
+          
+          if (rect.top < viewportCenter) {
+            let progress = viewportCenter - rect.top;
+            let percentage = (progress / rect.height) * 100;
+            percentage = Math.max(0, Math.min(percentage, 100));
+            
+            timelineGlow.style.height = `${percentage}%`;
+            
+            timelineItems.forEach(item => {
+              const itemRect = item.getBoundingClientRect();
+              if (itemRect.top < viewportCenter + 50) {
+                item.classList.add('active');
+              } else {
+                item.classList.remove('active');
+              }
+            });
           } else {
-            item.classList.remove('active');
+            timelineGlow.style.height = '0%';
+            timelineItems.forEach(item => item.classList.remove('active'));
           }
+          isScrollingTimeline = false;
         });
-      } else {
-        timelineGlow.style.height = '0%';
-        timelineItems.forEach(item => item.classList.remove('active'));
+        isScrollingTimeline = true;
       }
-    });
+    }, { passive: true });
   }
 
   /* =====================================================
@@ -665,7 +679,9 @@ document.addEventListener('DOMContentLoaded', () => {
     mouseX = 0.5;
     mouseY = 0.5;
 
+    let isSkillCloudVisible = false;
     const animateTags = () => {
+      if (!isSkillCloudVisible) return;
       ctx.clearRect(0, 0, size, size);
       const ax = -mouseY * maxSpeed;
       const ay = mouseX * maxSpeed;
@@ -676,7 +692,17 @@ document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(animateTags);
     };
 
-    animateTags();
+    // Optimization: Only animate when visible to save mobile resources
+    const skillObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isSkillCloudVisible = entry.isIntersecting;
+        if (isSkillCloudVisible) {
+          requestAnimationFrame(animateTags);
+        }
+      });
+    }, { threshold: 0 });
+    
+    skillObserver.observe(canvas);
   }
 
   /* =====================================================
@@ -875,6 +901,7 @@ document.addEventListener('DOMContentLoaded', () => {
       initialLeft = rect.left;
       initialTop = rect.top;
       
+      terminalWindow.style.position = 'absolute';
       terminalWindow.style.left = `${initialLeft}px`;
       terminalWindow.style.top = `${initialTop}px`;
       terminalWindow.style.transform = 'none';
@@ -977,8 +1004,14 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           break;
         case 'chisato':
-          if (typeof window.toggleChisatoTheme === 'function') window.toggleChisatoTheme();
-          printToTerminal('Lycoris mode activated! 🌸', true);
+          if (typeof window.toggleChisatoTheme === 'function') {
+            window.toggleChisatoTheme();
+            if (document.body.classList.contains('lycoris-theme')) {
+              printToTerminal('Lycoris mode enabled! 🌸', true);
+            } else {
+              printToTerminal('Lycoris mode disabled.', true);
+            }
+          }
           break;
         case 'sudo':
           if (args.join(' ') === 'sudo rm -rf /') {
@@ -1566,29 +1599,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* =====================================================
-     MOBILE TERMINAL BUBBLE
+     TERMINAL CHAT BUTTON
      ===================================================== */
-  const mobileBubble = document.getElementById('mobile-terminal-bubble');
-  if (mobileBubble) {
-    mobileBubble.addEventListener('click', () => {
+  const terminalBtn = document.getElementById('terminal-chat-btn');
+  if (terminalBtn) {
+    terminalBtn.addEventListener('click', () => {
       document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }));
     });
-
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight;
-      const winHeight = window.innerHeight;
-      const maxScroll = docHeight - winHeight;
-      
-      // Show when user scrolls past 30% of the page, remains visible until the very bottom
-      if (maxScroll > 0) {
-        if (scrollY > maxScroll * 0.3) {
-          mobileBubble.classList.add('visible');
-        } else {
-          mobileBubble.classList.remove('visible');
-        }
-      }
-    }, {passive: true});
   }
 
 });

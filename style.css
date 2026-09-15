@@ -254,43 +254,57 @@ h3 {
 }
 
 /* =========================================================
-   MOBILE TERMINAL BUBBLE
+   TERMINAL CHAT BUTTON
    ========================================================= */
-.mobile-terminal-bubble {
+.terminal-chat-btn {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  width: 55px;
   height: 55px;
-  border-radius: 50%;
   background: var(--text-accent);
   color: #fff;
+  border-radius: 99px;
   display: flex;
-  justify-content: center;
   align-items: center;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   z-index: 9999;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+  width: 55px;
+}
+
+.terminal-chat-btn:hover {
+  width: 180px;
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
+}
+
+.terminal-chat-btn:active {
+  transform: scale(0.95);
+}
+
+.terminal-icon {
+  width: 55px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.terminal-text {
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
   opacity: 0;
-  pointer-events: none;
-  transform: translateY(30px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transform: translateX(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.mobile-terminal-bubble.visible {
+.terminal-chat-btn:hover .terminal-text {
   opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-
-.mobile-terminal-bubble:active {
-  transform: scale(0.9);
-}
-
-@media (min-width: 769px) {
-  .mobile-terminal-bubble {
-    display: none !important;
-  }
+  transform: translateX(0);
 }
 
 /* =========================================================
@@ -414,6 +428,13 @@ button:hover~.cursor-glow {
 @media (max-width: 768px) {
   .cursor-glow {
     display: none;
+  }
+  
+  /* OPTIMIZATION: Reduce heavy blur and disable animations on mobile to prevent crashing */
+  .blob {
+    filter: blur(40px); /* Reduced from 90px */
+    animation: none !important;
+    opacity: 0.5;
   }
 }
 
@@ -821,11 +842,36 @@ body.dark-theme .browser-body {
 
   .hero-visual {
     margin-top: 3rem;
+    width: 100%;
+    max-width: 380px;
+  }
+
+  .browser-mockup {
+    transform: perspective(1000px) rotateY(-2deg) rotateX(2deg); /* Softer rotation on mobile */
+  }
+
+  .browser-body {
+    padding: 1rem;
+  }
+
+  .mockup-content {
+    padding: 1.25rem;
+  }
+
+  .mockup-text h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
   }
 
   .floating-stat-card {
     left: auto;
-    right: -20px;
+    right: 5px; /* Prevent horizontal overflow */
+    bottom: -15px;
+    padding: 1rem;
+  }
+
+  .floating-stat-card .stat-num {
+    font-size: 1.5rem;
   }
 }
 
@@ -1883,7 +1929,7 @@ footer {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 9999;
+  z-index: 10001; /* 10001 to be on top of the terminal */
   pointer-events: none;
   opacity: 0;
   transition: opacity 1s ease;
@@ -1891,7 +1937,7 @@ footer {
 
 .matrix-canvas.active {
   opacity: 1;
-  pointer-events: all;
+  /* pointer-events: all removed to prevent blocking clicks */
 }
 
 .scramble-text {
@@ -1991,7 +2037,7 @@ body.lycoris-theme .chisato-bubble {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   font-weight: bold;
   font-size: 0.9rem;
-  margin-left: -30upx;
+  margin-left: -30px;
   margin-bottom: 30px;
   opacity: 0;
   transform: translateY(10px);
