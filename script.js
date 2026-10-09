@@ -1,7 +1,237 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   /* =====================================================
-     THEME TOGGLE
+     LANGUAGE SYSTEM (i18n) - DEFAULT ENGLISH (EN)
+     ===================================================== */
+  const LANG_KEY = 'portfolio_lang';
+  let currentLang = localStorage.getItem(LANG_KEY) || 'en'; // Default English as requested
+  let currentProjectFilter = 'All';
+
+  const i18nData = {
+    en: {
+      lang: "en",
+      nav: {
+        work: "Work",
+        about: "About",
+        playground: "Playground",
+        contact: "Contact",
+        talk: "Let's talk",
+        themeDark: "Dark version ↗",
+        themeLight: "Light version ↗"
+      },
+      hero: {
+        badge: '<span class="pulse-dot"></span> OPEN TO COLLABORATIONS',
+        title: 'Building software<br>that feels <span class="highlight">intelligent.</span>',
+        subtitle: "I'm Ilfath Ubaydillah Mudzaki, a developer crafting solutions from AI models and Data Mining to Mobile Apps and Web Systems.",
+        btnWork: "See my work ↗",
+        btnContact: "Get in touch",
+        mockupText: 'Fast, responsive & modern software <span style="color:#0ea5e9;">without hassle.</span>',
+        mockupBtn: "Start a project →",
+        statShipped: "projects shipped"
+      },
+      stats: {
+        projects: "Projects shipped",
+        tech: "Technologies used",
+        ai: "AI Models built",
+        mr: "Mixed Reality App"
+      },
+      work: {
+        eyebrow: "SELECTED WORK",
+        title: "Featured Projects",
+        filters: {
+          all: "All",
+          webapp: "Web App",
+          mobile: "Mobile App",
+          aiml: "AI & Machine Learning",
+          enterprise: "Enterprise System",
+          realtime: "Real-Time System"
+        },
+        emptyMsg: 'No projects found in category "<strong>{category}</strong>".',
+        resetFilter: "View All Projects",
+        caseStudyBtn: "Case Study ↗",
+        viewCodeBtn: "View Code ↗",
+        liveDemoBtn: "Live Demo ↗",
+        internalBtn: "Internal Project"
+      },
+      about: {
+        eyebrow: "ABOUT",
+        title: "An adaptive developer exploring intelligent systems.",
+        p1: "I am passionate about solving complex problems through technology. My journey involves building diverse projects across multiple domains—from developing AI classification models and Mixed Reality applications to crafting mobile and web systems.",
+        p2: "Currently, my focus is on expanding my knowledge in Data Mining and Artificial Intelligence, aiming to create software that not only functions well but also provides intelligent insights.",
+        toolbox: "TOOLBOX"
+      },
+      exp: {
+        eyebrow: "EXPERIENCE",
+        title: "My Journey",
+        item1: {
+          date: "2024 - Present",
+          role: "Freelance Full-Stack Developer",
+          desc: "Building high-performance AI integrations, custom dashboards, and modern landing pages for various international clients."
+        },
+        item2: {
+          date: "2025 - 2026",
+          role: "Fullstack Developer Website and Mobile - Internship at BBWS Brantas Surabaya",
+          desc: "Developing a website and mobile application for BBWS Brantas Surabaya, focusing on data management and visualization."
+        },
+        item3: {
+          date: "2024 - 2025",
+          role: "Cloud Computing - Bangkit Academy (MSIB)",
+          desc: "Participated in the Cloud Computing learning path at Bangkit Academy, gaining hands-on experience with cloud technologies and solutions."
+        }
+      },
+      playground: {
+        eyebrow: "PLAYGROUND",
+        title: "Interactive API Sandbox",
+        subtitle: "Test out the mock backend API. Click an endpoint to fetch data.",
+        gameTitle: "Mini Game Break",
+        gameSubtitle: "Take a break and play Flappy Dev. Spacebar or click to jump.",
+        gameStart: "Play Game",
+        gameScore: "Score",
+        gameBest: "Best"
+      },
+      roi: {
+        eyebrow: "ESTIMATE YOUR PROJECT",
+        title: "What do you want to build?",
+        subtitle: "Move the slider to see estimated timeline and recommended tech stack.",
+        estTime: "Est. Time",
+        recStack: "Recommended Stack"
+      },
+      contact: {
+        title: "Let's build something great.",
+        subtitle: "Have a project in mind or just want to say hi? I'm always open to interesting work and collaborations.",
+        emailBtn: "Send me an email ↗"
+      },
+      footer: {
+        themeDark: "🌙 Dark Mode",
+        themeLight: "☀️ Light Mode"
+      },
+      modal: {
+        rolePrefix: "ROLE:",
+        problem: "⚠️ The Problem & Constraint",
+        solution: "💡 Technical Solution",
+        highlights: "Key Engineering Highlights",
+        repoBtn: "View Repository ↗",
+        demoBtn: "Visit Live Demo ↗",
+        closeBtn: "Close"
+      },
+      stt: {
+        tooltip: "Back to top"
+      }
+    },
+    id: {
+      lang: "id",
+      nav: {
+        work: "Karya",
+        about: "Tentang",
+        playground: "Playground",
+        contact: "Kontak",
+        talk: "Ajak Ngobrol",
+        themeDark: "Mode Gelap",
+        themeLight: "Mode Terang"
+      },
+      hero: {
+        badge: '<span class="pulse-dot"></span> OPEN FOR COLLABORATION',
+        title: 'Membangun software<br>yang beneran <span class="highlight">cerdas & intuitif.</span>',
+        subtitle: "Halo! Saya Ilfath Ubaydillah Mudzaki — software developer yang merancang solusi cerdas, mulai dari AI & Data Mining, aplikasi mobile, sampai arsitektur web modern.",
+        btnWork: "Lihat Karya ↗",
+        btnContact: "Ajak Ngobrol",
+        mockupText: 'Website modern, cepat & responsif, <span style="color:#0ea5e9;">rapi dan siap pakai</span> tanpa ribet.',
+        mockupBtn: "Mulai Kolaborasi →",
+        statShipped: "proyek tuntas"
+      },
+      stats: {
+        projects: "Proyek tuntas",
+        tech: "Teknologi aktif",
+        ai: "Model AI dirilis",
+        mr: "App Mixed Reality"
+      },
+      work: {
+        eyebrow: "PORTOFOLIO TERPILIH",
+        title: "Karya & Proyek Unggulan",
+        filters: {
+          all: "Semua",
+          webapp: "Web App",
+          mobile: "Mobile App",
+          aiml: "AI & Machine Learning",
+          enterprise: "Sistem Enterprise",
+          realtime: "Real-Time System"
+        },
+        emptyMsg: 'Belum ada proyek di kategori "<strong>{category}</strong>".',
+        resetFilter: "Lihat Semua Proyek",
+        caseStudyBtn: "Bedah Studi Kasus ↗",
+        viewCodeBtn: "Lihat Source Code ↗",
+        liveDemoBtn: "Coba Demo Langsung ↗",
+        internalBtn: "Proyek Internal"
+      },
+      about: {
+        eyebrow: "TENTANG SAYA",
+        title: "Developer adaptif yang mendalami kecerdasan komputasi & sistem modern.",
+        p1: "Saya selalu antusias memecahkan problem rumit lewat teknologi. Eksplorasi saya mencakup banyak hal—mulai dari melatih model klasifikasi AI, bereksperimen dengan Mixed Reality, sampai mengembangkan aplikasi web & mobile skala produksi yang tangguh.",
+        p2: "Saat ini, saya lagi fokus memperdalam keahlian di bidang Data Mining dan Artificial Intelligence (AI) untuk menghadirkan software yang nggak cuma kencang dan stabil, tapi juga ngasih insight berharga bagi penggunanya.",
+        toolbox: "STACK & TOOLS ANDALAN"
+      },
+      exp: {
+        eyebrow: "PENGALAMAN",
+        title: "Jejak Karir & Pengalaman",
+        item1: {
+          date: "2024 - Sekarang",
+          role: "Freelance Full-Stack Developer",
+          desc: "Membangun integrasi AI performa tinggi, dashboard analitik kustom, dan web interaktif yang modern untuk berbagai klien."
+        },
+        item2: {
+          date: "2025 - 2026",
+          role: "Fullstack Web & Mobile Developer — Magang di BBWS Brantas Surabaya",
+          desc: "Mengembangkan ekosistem web dan mobile untuk operasional BBWS Brantas Surabaya, berfokus pada visualisasi data dan monitoring pintu air secara real-time."
+        },
+        item3: {
+          date: "2024 - 2025",
+          role: "Cloud Computing Cohort — Bangkit Academy (MSIB)",
+          desc: "Mendalami arsitektur cloud terstandarisasi Google Cloud Platform (GCP), manajemen deployment backend skala besar, dan best practices DevOps modern."
+        }
+      },
+      playground: {
+        eyebrow: "PLAYGROUND",
+        title: "Sandbox API Interaktif",
+        subtitle: "Coba simulasi mock backend API di bawah ini. Klik endpoint buat langsung cek format respons datanya.",
+        gameTitle: "Rehat Sejenak & Main Game",
+        gameSubtitle: "Lepas penat sebentar bareng Flappy Dev. Tekan Spasi atau klik layar buat bikin karakter melompat.",
+        gameStart: "Mulai Main",
+        gameScore: "Skor",
+        gameBest: "Skor Terbaik"
+      },
+      roi: {
+        eyebrow: "ESTIMASI PROYEK",
+        title: "Mau bikin proyek apa kali ini?",
+        subtitle: "Tarik slider untuk melihat perkiraan durasi pengerjaan dan rekomendasi stack teknologi yang paling pas.",
+        estTime: "Perkiraan Waktu",
+        recStack: "Rekomendasi Stack"
+      },
+      contact: {
+        title: "Yuk, bikin karya keren bareng.",
+        subtitle: "Punya ide proyek menarik atau sekadar pengen nyapa dan ngobrol santai? Pintu saya selalu terbuka buat diskusi.",
+        emailBtn: "Kirim Email ke Saya ↗"
+      },
+      footer: {
+        themeDark: "🌙 Ganti ke Mode Gelap",
+        themeLight: "☀️ Ganti ke Mode Terang"
+      },
+      modal: {
+        rolePrefix: "PERAN:",
+        problem: "⚠️ Masalah & Tantangan Utama",
+        solution: "💡 Solusi Teknis yang Diterapkan",
+        highlights: "Sorotan Arsitektur & Rekayasa",
+        repoBtn: "Buka Repository ↗",
+        demoBtn: "Coba Demo Langsung ↗",
+        closeBtn: "Tutup"
+      },
+      stt: {
+        tooltip: "Kembali ke atas"
+      }
+    }
+  };
+
+  /* =====================================================
+     THEME TOGGLE (SUN / MOON ICON ONLY)
      ===================================================== */
   const body = document.body;
   const themeToggle = document.getElementById('theme-toggle');
@@ -10,16 +240,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const THEME_KEY = 'yunda-clone-theme';
 
   const applyTheme = (theme) => {
-    if (theme === 'dark') {
+    const isDark = theme === 'dark';
+    if (isDark) {
       body.classList.remove('light-theme');
       body.classList.add('dark-theme');
-      themeToggle.innerHTML = 'Light version ↗';
-      footerThemeToggle.innerHTML = '← See the light version';
+      if (themeToggle) {
+        themeToggle.setAttribute('aria-label', currentLang === 'id' ? 'Ganti ke Mode Terang' : 'Switch to Light Mode');
+        themeToggle.setAttribute('title', currentLang === 'id' ? 'Ganti ke Mode Terang' : 'Switch to Light Mode');
+      }
+      if (footerThemeToggle) {
+        footerThemeToggle.innerHTML = i18nData[currentLang].footer.themeLight;
+      }
     } else {
       body.classList.remove('dark-theme');
       body.classList.add('light-theme');
-      themeToggle.innerHTML = 'Dark version ↗';
-      footerThemeToggle.innerHTML = '← See the dark version';
+      if (themeToggle) {
+        themeToggle.setAttribute('aria-label', currentLang === 'id' ? 'Ganti ke Mode Gelap' : 'Switch to Dark Mode');
+        themeToggle.setAttribute('title', currentLang === 'id' ? 'Ganti ke Mode Gelap' : 'Switch to Dark Mode');
+      }
+      if (footerThemeToggle) {
+        footerThemeToggle.innerHTML = i18nData[currentLang].footer.themeDark;
+      }
     }
     localStorage.setItem(THEME_KEY, theme);
   };
@@ -36,8 +277,133 @@ document.addEventListener('DOMContentLoaded', () => {
     applyTheme(current === 'dark' ? 'light' : 'dark');
   };
 
-  themeToggle.addEventListener('click', toggleTheme);
-  footerThemeToggle.addEventListener('click', toggleTheme);
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+  if (footerThemeToggle) footerThemeToggle.addEventListener('click', toggleTheme);
+
+  /* =====================================================
+     LANGUAGE SWITCHER (EN / ID) - DEFAULT ENGLISH
+     ===================================================== */
+  const langToggleBtn = document.getElementById('lang-toggle');
+  const langBadgeEn = document.getElementById('lang-badge-en');
+  const langBadgeId = document.getElementById('lang-badge-id');
+  const sttTooltip = document.getElementById('stt-tooltip');
+
+  const setLanguage = (lang, triggerScrambleFx = false) => {
+    currentLang = lang === 'id' ? 'id' : 'en';
+    localStorage.setItem(LANG_KEY, currentLang);
+    document.documentElement.lang = currentLang;
+
+    // Toggle badge active class
+    if (langBadgeEn && langBadgeId) {
+      if (currentLang === 'en') {
+        langBadgeEn.classList.add('active');
+        langBadgeId.classList.remove('active');
+      } else {
+        langBadgeId.classList.add('active');
+        langBadgeEn.classList.remove('active');
+      }
+    }
+
+    // Synchronize Theme Toggle aria and footer text
+    const currentTheme = body.classList.contains('dark-theme') ? 'dark' : 'light';
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-label', currentTheme === 'dark'
+        ? (currentLang === 'id' ? 'Ganti ke Mode Terang' : 'Switch to Light Mode')
+        : (currentLang === 'id' ? 'Ganti ke Mode Gelap' : 'Switch to Dark Mode'));
+      themeToggle.setAttribute('title', currentTheme === 'dark'
+        ? (currentLang === 'id' ? 'Ganti ke Mode Terang' : 'Switch to Light Mode')
+        : (currentLang === 'id' ? 'Ganti ke Mode Gelap' : 'Switch to Dark Mode'));
+    }
+    if (footerThemeToggle) {
+      footerThemeToggle.innerHTML = currentTheme === 'dark'
+        ? i18nData[currentLang].footer.themeLight
+        : i18nData[currentLang].footer.themeDark;
+    }
+
+    // Update all elements with data-i18n
+    const elements = document.querySelectorAll('[data-i18n]');
+    elements.forEach(el => {
+      const path = el.getAttribute('data-i18n');
+      if (!path) return;
+      const keys = path.split('.');
+      let val = i18nData[currentLang];
+      for (const k of keys) {
+        if (val && typeof val === 'object' && k in val) {
+          val = val[k];
+        } else {
+          val = null;
+          break;
+        }
+      }
+
+      if (typeof val === 'string') {
+        if (el.classList.contains('scramble-text')) {
+          el.setAttribute('data-text', val);
+          if (triggerScrambleFx && typeof TextScramble !== 'undefined') {
+            const fx = new TextScramble(el);
+            fx.setText(val);
+          } else {
+            el.textContent = val;
+          }
+        } else if (val.includes('<') && val.includes('>')) {
+          el.innerHTML = val;
+        } else {
+          el.textContent = val;
+        }
+      }
+    });
+
+    if (sttTooltip) {
+      sttTooltip.textContent = i18nData[currentLang].stt.tooltip;
+    }
+
+    if (typeof renderProjects === 'function') {
+      renderProjects(currentProjectFilter);
+    }
+  };
+
+  if (langToggleBtn) {
+    langToggleBtn.addEventListener('click', () => {
+      const nextLang = currentLang === 'en' ? 'id' : 'en';
+      setLanguage(nextLang, true);
+    });
+  }
+
+  /* =====================================================
+     SCROLL TO TOP BUTTON
+     ===================================================== */
+  const scrollToTopBtn = document.getElementById('scroll-to-top');
+
+  if (scrollToTopBtn) {
+    const handleScrollTopVisibility = () => {
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+
+      if (scrollY > 350) {
+        scrollToTopBtn.classList.add('visible');
+      } else {
+        scrollToTopBtn.classList.remove('visible', 'at-bottom');
+      }
+
+      // Detect if user has scrolled down to the bottom area
+      if (scrollY + windowHeight >= docHeight - 250) {
+        scrollToTopBtn.classList.add('at-bottom');
+      } else {
+        scrollToTopBtn.classList.remove('at-bottom');
+      }
+    };
+
+    window.addEventListener('scroll', handleScrollTopVisibility, { passive: true });
+    handleScrollTopVisibility();
+
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
 
   /* =====================================================
      NAVBAR SCROLL
@@ -75,15 +441,613 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* =====================================================
-     FILTER BUTTONS
+     PROJECTS & FILTERING
      ===================================================== */
+  const escapeHtml = (text) => {
+    if (text === null || text === undefined) return '';
+    return String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  };
+
+  const initProjectCardEffects = () => {
+    const cards = document.querySelectorAll('.project-card');
+    cards.forEach(card => {
+      card.onmouseenter = () => {
+        card.style.transition = 'transform 0.15s ease-out, box-shadow 0.3s ease';
+      };
+
+      card.onmousemove = (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+
+        const isOverActionArea = Boolean(e.target.closest('.card-footer, .btn-case-study, .link-btn'));
+
+        if (isOverActionArea) {
+          card.style.transition = 'transform 0.25s ease-out, box-shadow 0.3s ease';
+          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1.02, 1.02, 1.02)';
+        } else {
+          card.style.transition = 'transform 0.1s ease-out, box-shadow 0.3s ease';
+          const rotateX = ((y - centerY) / centerY) * -12;
+          const rotateY = ((x - centerX) / centerX) * 12;
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        }
+      };
+      
+      card.onmouseleave = () => {
+        card.style.transition = 'transform 0.5s ease-out, box-shadow 0.3s ease';
+        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+      };
+    });
+  };
+
+  const projectGrid = document.getElementById('project-grid');
+
+  const renderProjects = (filter = 'All') => {
+    if (!projectGrid) return;
+
+    const data = (typeof window.projectsData !== 'undefined' && Array.isArray(window.projectsData))
+      ? window.projectsData
+      : [];
+
+    const activeFilter = (filter || 'All').trim().toLowerCase();
+    const normalizeFilter = str => (str || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    const activeNorm = normalizeFilter(activeFilter);
+
+    const filtered = activeFilter === 'all'
+      ? data
+      : data.filter(project => {
+          const cats = Array.isArray(project.category) ? project.category : [project.category].filter(Boolean);
+          return cats.some(c => {
+            const cLower = c.trim().toLowerCase();
+            return cLower === activeFilter || normalizeFilter(cLower) === activeNorm;
+          });
+        });
+
+    const isIndo = currentLang === 'id';
+
+    if (filtered.length === 0) {
+      const emptyMsg = isIndo
+        ? `Belum ada proyek di kategori "<strong>${escapeHtml(filter)}</strong>".`
+        : `No projects found in category "<strong>${escapeHtml(filter)}</strong>".`;
+      const resetBtnLabel = isIndo ? 'Lihat Semua Proyek' : 'View All Projects';
+
+      projectGrid.innerHTML = `
+        <div class="empty-projects-state">
+          <div class="empty-icon">📁</div>
+          <p>${emptyMsg}</p>
+          <button type="button" class="btn-outline reset-filter-btn" style="margin-top: 1rem; cursor: pointer; display: inline-block;">${resetBtnLabel}</button>
+        </div>
+      `;
+      const resetBtn = projectGrid.querySelector('.reset-filter-btn');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          const allBtn = document.querySelector('.filter-pills button[data-filter="All"]');
+          if (allBtn) allBtn.click();
+        });
+      }
+      return;
+    }
+
+    const caseStudyLabel = isIndo ? 'Studi Kasus ↗' : 'Case Study ↗';
+    const viewCodeLabel = isIndo ? 'Lihat Kode ↗' : 'View Code ↗';
+    const liveDemoLabel = isIndo ? 'Demo Langsung ↗' : 'Live Demo ↗';
+    const internalLabel = isIndo ? 'Proyek Internal' : 'Internal Project';
+
+    projectGrid.innerHTML = filtered.map((project, idx) => {
+      const delay = (idx % 3) * 0.1;
+      const bgClass = project.bgClass || 'bg-blue';
+      const currentBadge = (isIndo && project.badge_id) ? project.badge_id : project.badge;
+      const badgeHtml = currentBadge 
+        ? `<div class="badge role-badge"><span class="badge-role-dot"></span><span>${escapeHtml(currentBadge)}</span></div>` 
+        : '';
+
+      const thumbUrl = project.image || (Array.isArray(project.images) && project.images.length > 0 ? project.images[0] : null);
+      const visualHtml = thumbUrl
+        ? `
+            <div class="card-thumb-bg" style="background-image: url('${escapeHtml(thumbUrl)}');"></div>
+            <img src="${escapeHtml(thumbUrl)}" alt="${escapeHtml(project.title)}" class="project-thumb" loading="lazy">
+          `
+        : `<div class="mockup-img"><div class="mockup-header"><span class="m-dot"></span><span class="m-dot"></span><span class="m-dot"></span></div><div class="mockup-body-lines"><span></span><span></span><span></span></div></div>`;
+
+      const hasThumbClass = thumbUrl ? 'has-thumb' : '';
+
+      const tagsHtml = (project.tags || [])
+        .map(tag => `<span>${escapeHtml(tag)}</span>`)
+        .join('');
+
+      const hasDetails = Boolean(project.details);
+      const cardClass = `project-card reveal-up is-visible ${hasDetails ? 'has-details' : ''}`;
+
+      let linksHtml = '';
+      if (hasDetails) {
+        linksHtml += `<button type="button" class="btn-case-study" data-project-id="${escapeHtml(project.id)}" title="${isIndo ? 'Baca studi kasus teknis' : 'Read detailed case study'}">${caseStudyLabel}</button>`;
+      }
+      if (project.githubUrl) {
+        linksHtml += `<a href="${escapeHtml(project.githubUrl)}" target="_blank" rel="noopener noreferrer" class="link-btn ${hasDetails ? 'text-muted' : ''}">${viewCodeLabel}</a>`;
+      }
+      if (project.liveUrl) {
+        linksHtml += `<a href="${escapeHtml(project.liveUrl)}" target="_blank" rel="noopener noreferrer" class="link-btn live-link">${liveDemoLabel}</a>`;
+      }
+      if (!hasDetails && !project.githubUrl && !project.liveUrl) {
+        linksHtml += `<span class="link-btn text-muted">${internalLabel}</span>`;
+      }
+
+      const categoryAttr = Array.isArray(project.category) 
+        ? project.category.join(', ') 
+        : (project.category || '');
+
+      const currentDescription = (isIndo && project.description_id) ? project.description_id : project.description;
+
+      return `
+        <div class="${cardClass}" data-project-id="${escapeHtml(project.id)}" data-category="${escapeHtml(categoryAttr)}" style="transition-delay: ${delay}s;">
+          <div class="card-image ${escapeHtml(bgClass)} ${hasThumbClass}">
+            ${badgeHtml}
+            ${visualHtml}
+          </div>
+          <div class="card-content">
+            <div class="meta">${escapeHtml(project.meta || '')}</div>
+            <h3>${escapeHtml(project.title)}</h3>
+            <p>${escapeHtml(currentDescription || '')}</p>
+            <div class="tags">
+              ${tagsHtml}
+            </div>
+            <div class="card-footer">
+              ${linksHtml}
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Dynamically detect image aspect ratio to format card thumbnails gracefully (mobile vs desktop vs square logo)
+    projectGrid.querySelectorAll('.project-thumb').forEach(img => {
+      const applyRatio = () => {
+        if (!img.naturalWidth || !img.naturalHeight) return;
+        const ratio = img.naturalWidth / img.naturalHeight;
+        const parent = img.closest('.card-image');
+        if (!parent) return;
+        parent.classList.remove('is-portrait', 'is-square', 'is-landscape');
+        if (ratio < 0.9) {
+          parent.classList.add('is-portrait');
+        } else if (ratio < 1.25) {
+          parent.classList.add('is-square');
+        } else {
+          parent.classList.add('is-landscape');
+        }
+      };
+
+      if (img.complete && img.naturalWidth > 0) {
+        applyRatio();
+      } else {
+        img.addEventListener('load', applyRatio, { once: true });
+      }
+    });
+
+    initProjectCardEffects();
+  };
+
+  /* =====================================================
+     PROJECT CASE STUDY MODAL LOGIC
+     ===================================================== */
+  const modalOverlay = document.getElementById('project-modal-overlay');
+  const modalBackdrop = document.getElementById('project-modal-backdrop');
+  const modalCloseBtn = document.getElementById('pm-close-btn');
+  const pmBadge = document.getElementById('pm-badge');
+  const pmMeta = document.getElementById('pm-meta');
+  const pmContent = document.getElementById('pm-content');
+
+  const closeProjectModal = () => {
+    if (!modalOverlay) return;
+    modalOverlay.classList.remove('is-open');
+    modalOverlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+
+  const openProjectModal = (projectId) => {
+    if (!modalOverlay || !pmContent) return;
+    const data = (typeof window.projectsData !== 'undefined' && Array.isArray(window.projectsData))
+      ? window.projectsData
+      : [];
+    const project = data.find(p => p.id === projectId);
+    if (!project) return;
+
+    const details = project.details || {};
+
+    const isIndo = currentLang === 'id';
+    const rolePrefix = isIndo ? 'PERAN:' : 'ROLE:';
+    const currentBadge = (isIndo && project.badge_id) ? project.badge_id : project.badge;
+
+    if (pmBadge) {
+      pmBadge.innerHTML = `<span class="badge-role-dot"></span><span>${rolePrefix} ${escapeHtml(currentBadge || (isIndo ? 'PENGEMBANG' : 'DEVELOPER'))}</span>`;
+    }
+    if (pmMeta) pmMeta.textContent = project.meta || '';
+
+    const tagsHtml = (project.tags || [])
+      .map(tag => `<span>${escapeHtml(tag)}</span>`)
+      .join('');
+
+    let metricsHtml = '';
+    if (details.metrics && Array.isArray(details.metrics) && details.metrics.length > 0) {
+      metricsHtml = `
+        <div class="pm-metrics-grid">
+          ${details.metrics.map(m => `
+            <div class="pm-metric-card">
+              <div class="label">${escapeHtml(m.label)}</div>
+              <div class="val">${escapeHtml(m.value)}</div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    const problemText = isIndo && details.problem_id ? details.problem_id : details.problem;
+    const solutionText = isIndo && details.solution_id ? details.solution_id : details.solution;
+
+    let splitHtml = '';
+    if (problemText || solutionText) {
+      const problemTitle = isIndo ? '⚠️ Masalah & Tantangan Teknis' : '⚠️ The Problem & Constraint';
+      const solutionTitle = isIndo ? '💡 Solusi Teknis' : '💡 Technical Solution';
+      splitHtml = `
+        <div class="pm-split-grid">
+          ${problemText ? `
+            <div class="pm-block problem">
+              <div class="pm-block-header">
+                <span>${problemTitle}</span>
+              </div>
+              <p>${escapeHtml(problemText)}</p>
+            </div>
+          ` : ''}
+          ${solutionText ? `
+            <div class="pm-block solution">
+              <div class="pm-block-header">
+                <span>${solutionTitle}</span>
+              </div>
+              <p>${escapeHtml(solutionText)}</p>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    const highlightsList = isIndo && Array.isArray(details.highlights_id) ? details.highlights_id : (details.highlights || []);
+
+    let highlightsHtml = '';
+    if (highlightsList && highlightsList.length > 0) {
+      const highlightsHeading = isIndo ? 'Sorotan Rekayasa Utama' : 'Key Engineering Highlights';
+      highlightsHtml = `
+        <div class="pm-highlights-section">
+          <h3>${highlightsHeading}</h3>
+          <ul class="pm-highlights-list">
+            ${highlightsList.map(h => `
+              <li>
+                <span class="bullet">✦</span>
+                <span>${escapeHtml(h)}</span>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+      `;
+    }
+
+    let actionButtonsHtml = '';
+    if (project.githubUrl) {
+      const repoLabel = isIndo ? 'Lihat Repositori ↗' : 'View Repository ↗';
+      actionButtonsHtml += `
+        <a href="${escapeHtml(project.githubUrl)}" target="_blank" rel="noopener noreferrer" class="btn-solid" style="padding: 0.6rem 1.25rem; font-size: 0.85rem;">
+          ${repoLabel}
+        </a>
+      `;
+    }
+    if (project.liveUrl) {
+      const demoLabel = isIndo ? 'Kunjungi Demo Langsung ↗' : 'Visit Live Demo ↗';
+      actionButtonsHtml += `
+        <a href="${escapeHtml(project.liveUrl)}" target="_blank" rel="noopener noreferrer" class="btn-outline" style="padding: 0.6rem 1.25rem; font-size: 0.85rem;">
+          ${demoLabel}
+        </a>
+      `;
+    }
+    const closeLabel = isIndo ? 'Tutup' : 'Close';
+    actionButtonsHtml += `
+      <button type="button" class="btn-outline pm-modal-dismiss-btn" style="padding: 0.6rem 1.25rem; font-size: 0.85rem; margin-left: auto;">
+        ${closeLabel}
+      </button>
+    `;
+
+    const images = (Array.isArray(project.images) && project.images.length > 0)
+      ? project.images
+      : (project.image ? [project.image] : []);
+
+    let sliderHtml = '';
+    if (images.length === 1) {
+      sliderHtml = `
+        <div class="pm-slider-wrapper">
+          <div class="pm-slide">
+            <div class="pm-slide-bg" style="background-image: url('${escapeHtml(images[0])}');"></div>
+            <img src="${escapeHtml(images[0])}" alt="${escapeHtml(project.title)}" class="pm-slide-img" loading="lazy" title="Click to open full image">
+            <a href="${escapeHtml(images[0])}" target="_blank" rel="noopener noreferrer" class="pm-slide-zoom-hint" title="Buka gambar resolusi penuh di tab baru">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+              <span>Full View ↗</span>
+            </a>
+          </div>
+        </div>
+      `;
+    } else if (images.length > 1) {
+      sliderHtml = `
+        <div class="pm-slider-wrapper" id="pm-slider-wrapper">
+          <div class="pm-slider-track" id="pm-slider-track">
+            ${images.map((img, idx) => `
+              <div class="pm-slide">
+                <div class="pm-slide-bg" style="background-image: url('${escapeHtml(img)}');"></div>
+                <img src="${escapeHtml(img)}" alt="${escapeHtml(project.title)} - Preview ${idx + 1}" class="pm-slide-img" loading="lazy" title="Click to open full image">
+                <a href="${escapeHtml(img)}" target="_blank" rel="noopener noreferrer" class="pm-slide-zoom-hint" title="Buka gambar resolusi penuh di tab baru">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+                  <span>Full View ↗</span>
+                </a>
+              </div>
+            `).join('')}
+          </div>
+          <div class="pm-slider-counter" id="pm-slider-counter">1 / ${images.length}</div>
+          <button type="button" class="pm-slider-btn pm-prev" id="pm-slider-prev" aria-label="Previous image">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <button type="button" class="pm-slider-btn pm-next" id="pm-slider-next" aria-label="Next image">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+          <div class="pm-slider-dots" id="pm-slider-dots">
+            ${images.map((_, idx) => `
+              <button type="button" class="pm-dot ${idx === 0 ? 'active' : ''}" data-index="${idx}" aria-label="Slide ${idx + 1}"></button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    const summaryText = isIndo && (details.summary_id || project.description_id) 
+      ? (details.summary_id || project.description_id) 
+      : (details.summary || project.description || '');
+
+    pmContent.innerHTML = `
+      <div class="pm-title-section">
+        <h2 id="pm-title">${escapeHtml(project.title)}</h2>
+        <div class="tags" style="margin-bottom: 1rem;">
+          ${tagsHtml}
+        </div>
+        ${sliderHtml}
+        <p class="pm-summary">${escapeHtml(summaryText)}</p>
+      </div>
+
+      ${metricsHtml}
+      ${splitHtml}
+      ${highlightsHtml}
+
+      <div class="pm-modal-actions">
+        ${actionButtonsHtml}
+      </div>
+    `;
+
+    // Interactive slider controller with mouse drag & touch swipe
+    let wasSlideDragged = false;
+    if (images.length > 1) {
+      let currentSlide = 0;
+      const track = document.getElementById('pm-slider-track');
+      const counter = document.getElementById('pm-slider-counter');
+      const prevBtn = document.getElementById('pm-slider-prev');
+      const nextBtn = document.getElementById('pm-slider-next');
+      const dots = document.querySelectorAll('#pm-slider-dots .pm-dot');
+      const sliderWrap = document.getElementById('pm-slider-wrapper');
+      const totalImages = images.length;
+
+      let isDragging = false;
+      let startX = 0;
+      let dragDist = 0;
+      let activePointerId = null;
+
+      if (sliderWrap) {
+        sliderWrap.classList.add('is-draggable');
+      }
+
+      const updateSlide = (newIndex) => {
+        currentSlide = (newIndex + totalImages) % totalImages;
+        if (track) {
+          track.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+          track.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+        if (counter) {
+          counter.textContent = `${currentSlide + 1} / ${totalImages}`;
+        }
+        dots.forEach((dot, idx) => {
+          dot.classList.toggle('active', idx === currentSlide);
+        });
+      };
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          updateSlide(currentSlide - 1);
+        });
+        prevBtn.addEventListener('pointerdown', (e) => e.stopPropagation());
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          updateSlide(currentSlide + 1);
+        });
+        nextBtn.addEventListener('pointerdown', (e) => e.stopPropagation());
+      }
+
+      dots.forEach(dot => {
+        dot.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const idx = parseInt(dot.getAttribute('data-index'), 10);
+          if (!isNaN(idx)) updateSlide(idx);
+        });
+        dot.addEventListener('pointerdown', (e) => e.stopPropagation());
+      });
+
+      // Pointer Dragging (unified for Mouse, Trackpad, and Touch)
+      if (sliderWrap) {
+        const onPointerDown = (e) => {
+          if (e.button !== undefined && e.button !== 0) return;
+          if (e.target.closest('.pm-slider-btn, .pm-dot, .pm-slide-zoom-hint')) return;
+
+          isDragging = true;
+          wasSlideDragged = false;
+          startX = e.clientX;
+          dragDist = 0;
+          activePointerId = e.pointerId;
+
+          if (track) {
+            track.style.transition = 'none';
+          }
+          sliderWrap.classList.add('is-dragging');
+
+          try {
+            sliderWrap.setPointerCapture(e.pointerId);
+          } catch (_) {}
+        };
+
+        const onPointerMove = (e) => {
+          if (!isDragging) return;
+          const currentX = e.clientX;
+          dragDist = currentX - startX;
+
+          if (Math.abs(dragDist) > 6) {
+            wasSlideDragged = true;
+          }
+
+          const width = sliderWrap.offsetWidth || 500;
+          let effectiveDist = dragDist;
+          if ((currentSlide === 0 && dragDist > 0) || (currentSlide === totalImages - 1 && dragDist < 0)) {
+            effectiveDist = dragDist * 0.35;
+          }
+
+          const offsetPercent = (effectiveDist / width) * 100;
+          const currentPercent = -currentSlide * 100;
+          if (track) {
+            track.style.transform = `translateX(${currentPercent + offsetPercent}%)`;
+          }
+        };
+
+        const onPointerUp = (e) => {
+          if (!isDragging) return;
+          isDragging = false;
+          sliderWrap.classList.remove('is-dragging');
+
+          try {
+            if (activePointerId !== null) sliderWrap.releasePointerCapture(activePointerId);
+          } catch (_) {}
+
+          if (track) {
+            track.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+          }
+
+          const width = sliderWrap.offsetWidth || 500;
+          const threshold = Math.min(width * 0.15, 60);
+
+          if (dragDist < -threshold) {
+            updateSlide(currentSlide + 1);
+          } else if (dragDist > threshold) {
+            updateSlide(currentSlide - 1);
+          } else {
+            updateSlide(currentSlide);
+          }
+
+          if (Math.abs(dragDist) > 8) {
+            setTimeout(() => { wasSlideDragged = false; }, 100);
+          } else {
+            wasSlideDragged = false;
+          }
+        };
+
+        sliderWrap.addEventListener('pointerdown', onPointerDown);
+        sliderWrap.addEventListener('pointermove', onPointerMove);
+        sliderWrap.addEventListener('pointerup', onPointerUp);
+        sliderWrap.addEventListener('pointercancel', onPointerUp);
+        sliderWrap.addEventListener('dragstart', (e) => e.preventDefault());
+      }
+    }
+
+    // Allow clicking on slide images to open in full resolution (ignoring if user dragged)
+    pmContent.querySelectorAll('.pm-slide-img').forEach(img => {
+      img.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (wasSlideDragged) return;
+        if (img.src) window.open(img.src, '_blank');
+      });
+    });
+
+    const dismissBtn = pmContent.querySelector('.pm-modal-dismiss-btn');
+    if (dismissBtn) {
+      dismissBtn.addEventListener('click', closeProjectModal);
+    }
+
+    modalOverlay.classList.add('is-open');
+    modalOverlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  };
+
+  if (modalBackdrop) modalBackdrop.addEventListener('click', closeProjectModal);
+  if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeProjectModal);
+
+  document.addEventListener('keydown', (e) => {
+    if (!modalOverlay || !modalOverlay.classList.contains('is-open')) return;
+    if (e.key === 'Escape') {
+      closeProjectModal();
+    } else if (e.key === 'ArrowLeft') {
+      const prevBtn = document.getElementById('pm-slider-prev');
+      if (prevBtn) prevBtn.click();
+    } else if (e.key === 'ArrowRight') {
+      const nextBtn = document.getElementById('pm-slider-next');
+      if (nextBtn) nextBtn.click();
+    }
+  });
+
+  if (projectGrid) {
+    projectGrid.addEventListener('click', (e) => {
+      const caseStudyBtn = e.target.closest('.btn-case-study');
+      if (caseStudyBtn) {
+        e.preventDefault();
+        const pId = caseStudyBtn.getAttribute('data-project-id');
+        if (pId) openProjectModal(pId);
+        return;
+      }
+
+      const card = e.target.closest('.project-card.has-details');
+      if (card) {
+        if (e.target.closest('a')) return;
+        if (e.target.closest('.card-image') || e.target.closest('h3')) {
+          e.preventDefault();
+          const pId = card.getAttribute('data-project-id');
+          if (pId) openProjectModal(pId);
+        }
+      }
+    });
+  }
+
   const filterBtns = document.querySelectorAll('.filter-pills button');
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+      currentProjectFilter = btn.getAttribute('data-filter') || btn.textContent.trim();
+      renderProjects(currentProjectFilter);
     });
   });
+
+  // Initialize Language (Default English) and render initial projects
+  setLanguage(currentLang, false);
 
   /* =====================================================
      API SANDBOX
@@ -242,14 +1206,23 @@ document.addEventListener('DOMContentLoaded', () => {
         let resultData;
 
         if (query.includes('from projects') || query.includes('from work')) {
+           const pData = (typeof window.projectsData !== 'undefined' && Array.isArray(window.projectsData))
+             ? window.projectsData.map(p => ({
+                 id: p.id,
+                 name: p.title,
+                 role: p.badge,
+                 category: Array.isArray(p.category) ? p.category.join(', ') : p.category,
+                 stack: (p.tags || []).join(', ')
+               }))
+             : [
+                 { id: 1, name: "AI Model (Skripsi)", stack: "Python, AI" },
+                 { id: 2, name: "Lokantara AR", stack: "HTML, AR/MR" },
+                 { id: 3, name: "Hoax Classification", stack: "Python, Data Mining" }
+               ];
            resultData = {
              status: 200,
-             rows_returned: 3,
-             data: [
-               { id: 1, name: "AI Trip Planner", stack: "Next.js" },
-               { id: 2, name: "Seribu Cerita", stack: "Next.js, Express" },
-               { id: 3, name: "UPFotoStudio", stack: "Laravel" }
-             ]
+             rows_returned: pData.length,
+             data: pData
            };
         } else if (query.includes('from skills')) {
            resultData = mockData.skills;
@@ -404,39 +1377,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* =====================================================
      3D MAGNETIC HOVER ON PROJECT CARDS
      ===================================================== */
-  const projectCards = document.querySelectorAll('.project-card');
-  
-  projectCards.forEach(card => {
-    card.addEventListener('mouseenter', () => {
-      // Responsif & smooth saat hover
-      card.style.transition = 'transform 0.15s ease-out, box-shadow 0.3s ease';
-    });
-
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left; // x position within the element
-      const y = e.clientY - rect.top;  // y position within the element
-      
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      
-      // Pass coordinates to CSS for Spotlight effect
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
-      
-      // Calculate rotation (max 15 degrees for more pronounced effect)
-      const rotateX = ((y - centerY) / centerY) * -15;
-      const rotateY = ((x - centerX) / centerX) * 15;
-      
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-    });
-    
-    card.addEventListener('mouseleave', () => {
-      // Smooth reset
-      card.style.transition = 'transform 0.5s ease-out, box-shadow 0.3s ease';
-      card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
-    });
-  });
+  initProjectCardEffects();
 
   /* =====================================================
      ROI CALCULATOR
@@ -976,7 +1917,12 @@ document.addEventListener('DOMContentLoaded', () => {
           printToTerminal('Laravel, PHP, Next.js, Node.js, Golang, PostgreSQL, MySQL.');
           break;
         case 'projects':
-          printToTerminal('1. AI Trip Planner | 2. Mental Health App | 3. CMS Dashboard');
+          if (typeof window.projectsData !== 'undefined' && Array.isArray(window.projectsData)) {
+            const list = window.projectsData.map((p, idx) => `${idx + 1}. ${p.title} [Role: ${p.badge} | ${Array.isArray(p.category) ? p.category.join(', ') : p.category}]`).join(' | ');
+            printToTerminal(list);
+          } else {
+            printToTerminal('1. AI Model (Skripsi) | 2. Lokantara AR | 3. Hoax Classification');
+          }
           break;
         case 'hire':
           printToTerminal('Great choice. Preparing email client...', true);
@@ -1044,7 +1990,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* =====================================================
      MAGNETIC BUTTON EFFECT
      ===================================================== */
-  const magneticElements = document.querySelectorAll('.btn-solid, .btn-outline, .btn-outline-glass, .theme-toggle, .nav-links a, .endpoint-btn, .footer-link');
+  const magneticElements = document.querySelectorAll('.btn-solid, .btn-outline, .btn-outline-glass, .theme-toggle, .nav-links a, .endpoint-btn, .footer-link, .lang-toggle, .scroll-to-top');
   
   magneticElements.forEach(el => {
     el.addEventListener('mousemove', (e) => {
@@ -1560,11 +2506,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* =====================================================
-     CUSTOM CURSOR LOGIC
+     CUSTOM CURSOR LOGIC (TRAILING RING + INSTANT CENTER DOT)
      ===================================================== */
   const cursor = document.getElementById('custom-cursor');
+  const cursorDot = document.getElementById('custom-cursor-dot');
 
-  if (cursor) {
+  if (cursor || cursorDot) {
     // Only activate on devices with fine pointer (mouse)
     if (window.matchMedia("(pointer: fine)").matches) {
       let mouseX = -100, mouseY = -100;
@@ -1573,27 +2520,33 @@ document.addEventListener('DOMContentLoaded', () => {
       document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
+        if (cursorDot) {
+          cursorDot.style.left = `${mouseX}px`;
+          cursorDot.style.top = `${mouseY}px`;
+        }
       });
 
       const animateCursor = () => {
         cursorX += (mouseX - cursorX) * 0.2;
         cursorY += (mouseY - cursorY) * 0.2;
         
-        cursor.style.left = `${cursorX}px`;
-        cursor.style.top = `${cursorY}px`;
+        if (cursor) {
+          cursor.style.left = `${cursorX}px`;
+          cursor.style.top = `${cursorY}px`;
+        }
         
         requestAnimationFrame(animateCursor);
       };
       animateCursor();
 
-      const hoverElements = document.querySelectorAll('a, button, input, [role="button"], .scratch-container canvas');
-      hoverElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-          cursor.classList.add('hovering');
-        });
-        el.addEventListener('mouseleave', () => {
-          cursor.classList.remove('hovering');
-        });
+      document.addEventListener('mouseover', (e) => {
+        if (e.target.closest('a, button, input, [role="button"], .scratch-container canvas, .pm-close-btn, .btn-case-study, .link-btn, .project-card.has-details .card-image, .project-card.has-details h3, .pm-slider-btn, .pm-dot, .pm-slide-img, .pm-slide-zoom-hint, .pm-slider-wrapper.is-draggable')) {
+          if (cursor) cursor.classList.add('hovering');
+          if (cursorDot) cursorDot.classList.add('hovering');
+        } else {
+          if (cursor) cursor.classList.remove('hovering');
+          if (cursorDot) cursorDot.classList.remove('hovering');
+        }
       });
     }
   }

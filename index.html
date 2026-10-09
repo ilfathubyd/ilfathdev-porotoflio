@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,6 +40,7 @@
 
   <!-- CUSTOM CURSOR -->
   <div class="custom-cursor" id="custom-cursor"></div>
+  <div class="custom-cursor-dot" id="custom-cursor-dot"></div>
 
   <!-- AMBIENT BACKGROUND -->
   <div class="ambient-bg">
@@ -70,15 +71,41 @@
       <a href="#" class="logo">Ilfath<span>.</span></a>
       
       <ul class="nav-links">
-        <li><a href="#work">Work</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#playground">Playground</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#work" data-i18n="nav.work">Work</a></li>
+        <li><a href="#about" data-i18n="nav.about">About</a></li>
+        <li><a href="#playground" data-i18n="nav.playground">Playground</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
       </ul>
       
       <div class="nav-actions">
-        <button id="theme-toggle" class="theme-toggle">Dark version ↗</button>
-        <a href="#contact" class="btn-solid">Let's talk</a>
+        <button id="lang-toggle" class="lang-toggle" aria-label="Switch Language / Ganti Bahasa" title="Switch Language (EN / ID)">
+          <svg class="lang-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span class="lang-badge active" id="lang-badge-en">EN</span>
+          <span class="lang-sep">/</span>
+          <span class="lang-badge" id="lang-badge-id">ID</span>
+        </button>
+        <button id="theme-toggle" class="theme-toggle icon-toggle" aria-label="Toggle Theme (Sun / Moon)" title="Toggle Theme (Sun / Moon)">
+          <svg class="theme-icon sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="5" r="5" style="display:none;"></circle>
+            <circle cx="12" cy="12" r="4"></circle>
+            <line x1="12" y1="2" x2="12" y2="4"></line>
+            <line x1="12" y1="20" x2="12" y2="22"></line>
+            <line x1="4.93" y1="4.93" x2="6.34" y2="6.34"></line>
+            <line x1="17.66" y1="17.66" x2="19.07" y2="19.07"></line>
+            <line x1="2" y1="12" x2="4" y2="12"></line>
+            <line x1="20" y1="12" x2="22" y2="12"></line>
+            <line x1="4.93" y1="19.07" x2="6.34" y2="17.66"></line>
+            <line x1="17.66" y1="6.34" x2="19.07" y2="4.93"></line>
+          </svg>
+          <svg class="theme-icon moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <a href="#contact" class="btn-solid nav-cta-btn" data-i18n="nav.talk">Let's talk</a>
       </div>
 
       <button class="mobile-menu-btn">
@@ -94,23 +121,23 @@
         
         <div class="hero-content reveal-up">
           <div class="badge-group">
-            <div class="availability-badge">
+            <div class="availability-badge" data-i18n="hero.badge">
               <span class="pulse-dot"></span> OPEN TO COLLABORATIONS
             </div>
           </div>
           
-          <h1 class="hero-title">
+          <h1 class="hero-title" data-i18n="hero.title">
             Building software<br>
             that feels <span class="highlight">intelligent.</span>
           </h1>
           
-          <p class="hero-subtitle">
+          <p class="hero-subtitle" data-i18n="hero.subtitle">
             I'm Ilfath Ubaydillah Mudzaki, a developer crafting solutions from AI models and Data Mining to Mobile Apps and Web Systems.
           </p>
           
           <div class="hero-cta">
-            <a href="#work" class="btn-solid with-icon">See my work ↗</a>
-            <a href="#contact" class="btn-outline">Get in touch</a>
+            <a href="#work" class="btn-solid with-icon" data-i18n="hero.btnWork">See my work ↗</a>
+            <a href="#contact" class="btn-outline" data-i18n="hero.btnContact">Get in touch</a>
           </div>
         </div>
 
@@ -123,8 +150,8 @@
             <div class="browser-body">
               <div class="mockup-content">
                 <div class="mockup-text">
-                  <h3>Website modern dan responsif, <span style="color:#0ea5e9;">tanpa ribet</span> dan satset.</h3>
-                  <div class="mockup-btn">Buat website →</div>
+                  <h3 data-i18n="hero.mockupText">Fast, responsive & modern software <span style="color:#0ea5e9;">without hassle.</span></h3>
+                  <div class="mockup-btn" data-i18n="hero.mockupBtn">Start a project →</div>
                 </div>
               </div>
             </div>
@@ -132,7 +159,7 @@
           
           <div class="floating-stat-card">
             <div class="stat-num">18</div>
-            <div class="stat-text">projects shipped</div>
+            <div class="stat-text" data-i18n="hero.statShipped">projects shipped</div>
           </div>
         </div>
 
@@ -161,19 +188,19 @@
       <div class="container stats-container reveal-up">
         <div class="stat-box">
           <h2>18</h2>
-          <p>Projects shipped</p>
+          <p data-i18n="stats.projects">Projects shipped</p>
         </div>
         <div class="stat-box">
           <h2>10+</h2>
-          <p>Technologies used</p>
+          <p data-i18n="stats.tech">Technologies used</p>
         </div>
         <div class="stat-box">
           <h2>2</h2>
-          <p>AI Models built</p>
+          <p data-i18n="stats.ai">AI Models built</p>
         </div>
         <div class="stat-box">
           <h2>1</h2>
-          <p>Mixed Reality App</p>
+          <p data-i18n="stats.mr">Mixed Reality App</p>
         </div>
       </div>
     </section>
@@ -185,77 +212,22 @@
     <section class="work" id="work">
       <div class="container">
         <div class="section-header">
-          <span class="eyebrow">SELECTED WORK</span>
+          <span class="eyebrow" data-i18n="work.eyebrow">SELECTED WORK</span>
           <div class="header-row">
-            <h2 class="scramble-text" data-text="Featured Projects">Featured Projects</h2>
-            <div class="filter-pills">
-              <button class="active">All</button>
-              <button>AI App</button>
-              <button>Web App</button>
-              <button>WordPress</button>
-              <button>Algorithm / Data</button>
-              <button>Management System</button>
+            <h2 class="scramble-text" data-text="Featured Projects" data-i18n="work.title">Featured Projects</h2>
+            <div class="filter-pills" id="project-filters">
+              <button class="active" data-filter="All" data-i18n="work.filters.all">All</button>
+              <button data-filter="Web App" data-i18n="work.filters.webapp">Web App</button>
+              <button data-filter="Mobile App" data-i18n="work.filters.mobile">Mobile App</button>
+              <button data-filter="AI & Machine Learning" data-i18n="work.filters.aiml">AI & Machine Learning</button>
+              <button data-filter="Enterprise System" data-i18n="work.filters.enterprise">Enterprise System</button>
+              <button data-filter="Real-Time System" data-i18n="work.filters.realtime">Real-Time System</button>
             </div>
           </div>
         </div>
 
-        <div class="project-grid">
-          <!-- Project 1 -->
-          <div class="project-card reveal-up">
-            <div class="card-image bg-blue">
-              <div class="badge">AI MODEL</div>
-              <div class="mockup-img"></div>
-            </div>
-            <div class="card-content">
-              <div class="meta">Skripsi Project • 2024</div>
-              <h3>AI Model (Skripsi)</h3>
-              <p>An Artificial Intelligence classification model built for my final thesis (skripsi), utilizing Python and Machine Learning techniques.</p>
-              <div class="tags">
-                <span>Python</span><span>AI</span><span>Machine Learning</span>
-              </div>
-              <div class="card-footer">
-                <a href="https://github.com/ilfathubyd/skripsi-ai-model" target="_blank" class="link-btn">View Code ↗</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Project 2 -->
-          <div class="project-card reveal-up" style="transition-delay: 0.1s;">
-            <div class="card-image bg-gray">
-              <div class="badge">MIXED REALITY</div>
-              <div class="mockup-img"></div>
-            </div>
-            <div class="card-content">
-              <div class="meta">UAS Project • 2024</div>
-              <h3>Lokantara AR</h3>
-              <p>An interactive Augmented Reality / Mixed Reality project designed for university examination (UAS).</p>
-              <div class="tags">
-                <span>HTML</span><span>AR/MR</span><span>Mixed Reality</span>
-              </div>
-              <div class="card-footer">
-                <a href="https://github.com/ilfathubyd/lokantara-ar" target="_blank" class="link-btn">View Code ↗</a>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Project 3 -->
-          <div class="project-card reveal-up" style="transition-delay: 0.2s;">
-            <div class="card-image bg-pink">
-              <div class="badge">DATA MINING</div>
-              <div class="mockup-img"></div>
-            </div>
-            <div class="card-content">
-              <div class="meta">UAS Project • 2024</div>
-              <h3>Hoax Classification</h3>
-              <p>A data mining project focused on classifying hoax news and information, demonstrating data processing and classification algorithms.</p>
-              <div class="tags">
-                <span>Python</span><span>Data Mining</span><span>Algorithms</span>
-              </div>
-              <div class="card-footer">
-                <a href="https://github.com/ilfathubyd/klasifikasi-hoax-datamining" target="_blank" class="link-btn">View Code ↗</a>
-              </div>
-            </div>
-          </div>
+        <div class="project-grid" id="project-grid">
+          <!-- Projects rendered dynamically from projects.js -->
         </div>
       </div>
     </section>
@@ -266,17 +238,17 @@
     <!-- ABOUT SECTION -->
     <section class="about" id="about">
       <div class="container reveal-up">
-        <span class="eyebrow">ABOUT</span>
+        <span class="eyebrow" data-i18n="about.eyebrow">ABOUT</span>
         <div class="about-grid">
           <div class="about-left">
-            <h2 class="scramble-text" data-text="An adaptive developer exploring intelligent systems.">An adaptive developer exploring intelligent systems.</h2>
+            <h2 class="scramble-text" data-text="An adaptive developer exploring intelligent systems." data-i18n="about.title">An adaptive developer exploring intelligent systems.</h2>
           </div>
           <div class="about-right">
-            <p>I am passionate about solving complex problems through technology. My journey involves building diverse projects across multiple domains—from developing AI classification models and Mixed Reality applications to crafting mobile and web systems.</p>
-            <p>Currently, my focus is on expanding my knowledge in Data Mining and Artificial Intelligence, aiming to create software that not only functions well but also provides intelligent insights.</p>
+            <p data-i18n="about.p1">I am passionate about solving complex problems through technology. My journey involves building diverse projects across multiple domains—from developing AI classification models and Mixed Reality applications to crafting mobile and web systems.</p>
+            <p data-i18n="about.p2">Currently, my focus is on expanding my knowledge in Data Mining and Artificial Intelligence, aiming to create software that not only functions well but also provides intelligent insights.</p>
             
             <div class="toolbox">
-              <span class="toolbox-title">TOOLBOX</span>
+              <span class="toolbox-title" data-i18n="about.toolbox">TOOLBOX</span>
               <div class="tags">
                 <span>Python</span>
                 <span>C++</span>
@@ -301,8 +273,8 @@
     <!-- EXPERIENCE SECTION -->
     <section class="experience" id="experience">
       <div class="container reveal-up">
-        <span class="eyebrow">EXPERIENCE</span>
-        <h2 class="scramble-text" data-text="My Journey">My Journey</h2>
+        <span class="eyebrow" data-i18n="exp.eyebrow">EXPERIENCE</span>
+        <h2 class="scramble-text" data-text="My Journey" data-i18n="exp.title">My Journey</h2>
         
         <div class="timeline-wrapper">
           <div class="timeline-track">
@@ -312,27 +284,27 @@
           <div class="timeline-item reveal-up">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-              <span class="timeline-date">2024 - Present</span>
-              <h3>Freelance Full-Stack Developer</h3>
-              <p>Building high-performance AI integrations, custom dashboards, and modern landing pages for various international clients.</p>
+              <span class="timeline-date" data-i18n="exp.item1.date">2024 - Present</span>
+              <h3 data-i18n="exp.item1.role">Freelance Full-Stack Developer</h3>
+              <p data-i18n="exp.item1.desc">Building high-performance AI integrations, custom dashboards, and modern landing pages for various international clients.</p>
             </div>
           </div>
           
           <div class="timeline-item reveal-up">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-              <span class="timeline-date">2025 - 2026</span>
-              <h3>Fullstack Developer Website and Mobile - Internship at BBWS Brantas Surabaya</h3>
-              <p>Developing a website and mobile application for BBWS Brantas Surabaya, focusing on data management and visualization.</p>
+              <span class="timeline-date" data-i18n="exp.item2.date">2025 - 2026</span>
+              <h3 data-i18n="exp.item2.role">Fullstack Developer Website and Mobile - Internship at BBWS Brantas Surabaya</h3>
+              <p data-i18n="exp.item2.desc">Developing a website and mobile application for BBWS Brantas Surabaya, focusing on data management and visualization.</p>
             </div>
           </div>
           
           <div class="timeline-item reveal-up">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-              <span class="timeline-date">2024 - 2025</span>
-              <h3>Cloud Computing - Bangkit Academy (MSIB)</h3>
-              <p>Participated in the Cloud Computing learning path at Bangkit Academy, gaining hands-on experience with cloud technologies and solutions.</p>
+              <span class="timeline-date" data-i18n="exp.item3.date">2024 - 2025</span>
+              <h3 data-i18n="exp.item3.role">Cloud Computing - Bangkit Academy (MSIB)</h3>
+              <p data-i18n="exp.item3.desc">Participated in the Cloud Computing learning path at Bangkit Academy, gaining hands-on experience with cloud technologies and solutions.</p>
             </div>
           </div>
         </div>
@@ -345,10 +317,10 @@
     <!-- PLAYGROUND SECTION (API SANDBOX) -->
     <section class="playground" id="playground">
       <div class="container reveal-up">
-        <span class="eyebrow">PLAYGROUND</span>
+        <span class="eyebrow" data-i18n="playground.eyebrow">PLAYGROUND</span>
         <div class="playground-header">
-          <h2 class="scramble-text" data-text="Interactive API Sandbox">Interactive API Sandbox</h2>
-          <p class="text-muted">Test out the mock backend API. Click an endpoint to fetch data.</p>
+          <h2 class="scramble-text" data-text="Interactive API Sandbox" data-i18n="playground.title">Interactive API Sandbox</h2>
+          <p class="text-muted" data-i18n="playground.subtitle">Test out the mock backend API. Click an endpoint to fetch data.</p>
         </div>
         
         <div class="sandbox-wrapper">
@@ -391,8 +363,8 @@
         </div>
 
         <div class="playground-header" style="margin-top: 5rem;">
-          <h2 class="scramble-text" data-text="Mini Game Break">Mini Game Break</h2>
-          <p class="text-muted">Take a break and play Flappy Dev. Spacebar or click to jump.</p>
+          <h2 class="scramble-text" data-text="Mini Game Break" data-i18n="playground.gameTitle">Mini Game Break</h2>
+          <p class="text-muted" data-i18n="playground.gameSubtitle">Take a break and play Flappy Dev. Spacebar or click to jump.</p>
         </div>
         
         <div class="minigame-wrapper reveal-up">
@@ -401,7 +373,7 @@
             <h3 id="flappy-title">Flappy Dev</h3>
             <p id="flappy-score-text">Score: 0</p>
             <p id="flappy-best-score-text" style="font-size: 0.9rem; color: #9ca3af; margin-top: -1rem; margin-bottom: 1.5rem;"></p>
-            <button id="flappy-start-btn" class="btn-solid btn-cyan">Play Game</button>
+            <button id="flappy-start-btn" class="btn-solid btn-cyan" data-i18n="playground.gameStart">Play Game</button>
           </div>
         </div>
       </div>
@@ -413,10 +385,10 @@
     <!-- ROI CALCULATOR SECTION -->
     <section class="roi-calculator" id="roi">
       <div class="container reveal-up">
-        <span class="eyebrow">ESTIMATE YOUR PROJECT</span>
+        <span class="eyebrow" data-i18n="roi.eyebrow">ESTIMATE YOUR PROJECT</span>
         <div class="roi-header">
-          <h2 class="scramble-text" data-text="What do you want to build?">What do you want to build?</h2>
-          <p class="text-muted">Move the slider to see estimated timeline and recommended tech stack.</p>
+          <h2 class="scramble-text" data-text="What do you want to build?" data-i18n="roi.title">What do you want to build?</h2>
+          <p class="text-muted" data-i18n="roi.subtitle">Move the slider to see estimated timeline and recommended tech stack.</p>
         </div>
         
         <div class="calculator-card">
@@ -429,11 +401,11 @@
           
           <div class="calc-results">
             <div class="result-box">
-              <span class="result-label">Est. Time</span>
+              <span class="result-label" data-i18n="roi.estTime">Est. Time</span>
               <h3 id="calc-time" style="transition: opacity 0.15s ease;">1 - 2 Weeks</h3>
             </div>
             <div class="result-box">
-              <span class="result-label">Recommended Stack</span>
+              <span class="result-label" data-i18n="roi.recStack">Recommended Stack</span>
               <h3 id="calc-stack" style="transition: opacity 0.15s ease;">WordPress / HTML / CSS</h3>
             </div>
           </div>
@@ -451,11 +423,11 @@
           <div class="mouse-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="7"></rect><line x1="12" y1="6" x2="12" y2="10"></line></svg>
           </div>
-          <h2 class="scramble-text" data-text="Let's build something great.">Let's build something great.</h2>
-          <p>Have a project in mind or just want to say hi? I'm always open to interesting work and collaborations.</p>
+          <h2 class="scramble-text" data-text="Let's build something great." data-i18n="contact.title">Let's build something great.</h2>
+          <p data-i18n="contact.subtitle">Have a project in mind or just want to say hi? I'm always open to interesting work and collaborations.</p>
 
           <div class="contact-buttons">
-            <a href="mailto:contact.ilfath@gmail.com" class="btn-solid btn-cyan">Send me an email ↗</a>
+            <a href="mailto:contact.ilfath@gmail.com" class="btn-solid btn-cyan" data-i18n="contact.emailBtn">Send me an email ↗</a>
             <a href="https://linkedin.com/in/ilfathubyd" class="btn-outline-glass">LinkedIn</a>
             <a href="https://github.com/ilfathubyd" class="btn-outline-glass"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg> GitHub</a>
           </div>
@@ -468,7 +440,7 @@
     <div class="container footer-container">
       <p>© 2026 Ilfath Ubaydillah Mudzaki</p>
       <div style="display: flex; gap: 1rem;">
-        <button id="footer-theme-toggle" class="footer-link">← See the dark version</button>
+        <button id="footer-theme-toggle" class="footer-link" data-i18n="footer.theme">← See the dark version</button>
         <button id="cmd-k-btn" class="footer-link" onclick="document.getElementById('secret-terminal').classList.add('is-open'); setTimeout(()=>document.getElementById('st-input').focus(), 100)">[Cmd + K]</button>
       </div>
     </div>
@@ -500,11 +472,36 @@
     </div>
   </div>
 
+  <!-- PROJECT CASE STUDY MODAL -->
+  <div class="project-modal-overlay" id="project-modal-overlay" aria-hidden="true">
+    <div class="project-modal-backdrop" id="project-modal-backdrop"></div>
+    <div class="project-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="pm-title">
+      <div class="project-modal-header">
+        <div class="pm-meta-row">
+          <span class="pm-badge" id="pm-badge"></span>
+          <span class="pm-meta" id="pm-meta"></span>
+        </div>
+        <button type="button" class="pm-close-btn" id="pm-close-btn" aria-label="Tutup Detail Proyek">&times;</button>
+      </div>
+      <div class="project-modal-scroll" id="pm-content">
+        <!-- Content injected dynamically by script.js -->
+      </div>
+    </div>
+  </div>
+
   <!-- CHISATO WIDGET -->
   <div class="chisato-widget" id="chisato-widget">
     <img src="chisato_chibi.webp" alt="Chisato Nishikigi" />
     <div class="chisato-bubble">Welcome to Lycoris mode! ✨</div>
   </div>
+
+  <!-- SCROLL TO TOP BUTTON -->
+  <button id="scroll-to-top" class="scroll-to-top" aria-label="Scroll to top" title="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+    <span class="stt-tooltip" id="stt-tooltip" data-i18n="stt.tooltip">Back to top</span>
+  </button>
 
   <!-- TERMINAL CHAT BUTTON -->
   <div id="terminal-chat-btn" class="terminal-chat-btn">
@@ -517,6 +514,7 @@
     <span class="terminal-text">Open Terminal</span>
   </div>
 
+  <script src="projects.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
